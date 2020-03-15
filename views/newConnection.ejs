@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
+		<link rel = "stylesheet" href="../public/css/style.css" />
+		<title> New Connection </title>
+	</head>
+
+	<body>
+
+	<header>
+	<%- include('partials/header'); -%>
+	<%- include('partials/site-navigation'); -%>
+	</header>
+	<div class = "form">
+  	<h1>Host your talk with us! Sign up here!!</h1>
+
+		<form action = "/newConnection" method="post">
+			<label for="connection[name]"> Talk Name: </label><br>
+			<input type="text" name="connection[name]"><br><br>
+
+			<label for="connection[host]"> Hosted by: </label><br>
+			<input type="text" name="connection[host]"><br><br>
+
+			<label for="connection[topic]"> Topic:  </label><br>
+			<select name = "connection[topic]">
+				<option value="Android">Android</option>
+				<option value="Introduction to JAVA">Introduction to JAVA</option>
+				<option value="Career">Career</option>
+			</select>
+			<BR><BR>
+			<label for="connection[details]"> Additional Details: </label><br>
+			<textarea name="connection[details]" rows="10" cols="50">Please enter additional details here</textarea> <BR><BR>
+
+			<label for="connection[date]"> Date: </label><br>
+			<input type="text" name="connection[date]"><br><br>
+
+			<label for="connection[time]"> Time: </label><br>
+			<input type="text" name="connection[time]"><br><br>
+
+			<button type="submit">Submit</button>
+		</form>
+</div>
+
+	<%- include('partials/circle-theme'); -%>
+
+	<%- include('partials/footer'); -%>
+
+	</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
+		<link rel = "stylesheet" href="../public/css/style.css" />
+		<title> Connection </title>
+	</head>
+	<body>
+	<div class = "page-content">
+	<header>
+		<%- include('partials/header'); -%>
+		<%- include('partials/site-navigation'); -%>
+	</header>
+	<main class = "itemMain">
+		<section class = "itemDesc">
+
+		<h2> <%= obj.name %> </h2>
+			<section>
+				<p style="float: left;"><img src="../public/img/logo_netbeans_red.png" alt = "netbeans_logo" height="100" width="100"></p>
+				<small>Hosted by: <%= obj.host %> <BR> Date: <%= obj.date %> <BR> Time: <%= obj.time %></small>
+			</section>
+			<BR>
+		<h4> Details </h4>
+		<%= obj.details %>
+		</section>
+
+		<section class = "itemPoll">
+			<p id = "pollText"> Are you going? 3 people are going </p>
+			<BR>
+			<div id = "pollButtons">
+				<button class = "Yes" onclick = "location.href='savedConnections'" type="button"> Yes </button>
+				<button class = "No" onclick = "location.href='savedConnections'" type="button"> No </button>
+				<button class = "Maybe" onclick = "location.href='savedConnections'" type="button"> Maybe </button>
+			</div>
+		</section>
+
+	</main>
+	<%- include('partials/circle-theme'); -%>
+	</div>
+	<%- include('partials/footer'); -%>
+</body>
+</html>

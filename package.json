@@ -1,0 +1,14 @@
+{
+  "name": "ml2",
+  "version": "2.0.0",
+  "description": "Milestone 2",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

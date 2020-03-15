@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
+		<link rel = "stylesheet" href="../public/css/style.css" />
+		<title> Connections </title>
+	</head>
+	<body>
+	<header>
+	<%- include('partials/header'); -%>
+	<%- include('partials/site-navigation'); -%>
+
+	<main class = "catalogMain">
+				<h3> Android </h3>
+				<small> A series of talks hosted by ITCS 5180</small>
+				<ul class = "catalog-links">
+					<% for (var i=0;i<obj.length; i++) { %>
+						<% if(obj[i].topic === "Android"){ %>
+						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[i].connectionID -%>"> <%= obj[i].name %> </a> </li>
+						<% } %>
+					<% } %>
+				</ul>
+				<BR>
+
+				<h3> Introduction to JAVA </h3>
+					<small> A series of talks aimed to help students get started with Java. No prior coding experience needed! </small>
+					<ul class = "catalog-links">
+						<% for (var i=0;i<obj.length; i++) { %>
+							<% if(obj[i].topic === "Introduction to JAVA"){ %>
+								<li> <a class = "catalog-link" href="connection?connectionID=<%- obj[i].connectionID -%>"> <%= obj[i].name %> </a> </li>
+							<% } %>
+						<% } %>
+					</ul>
+					<BR>
+
+				<h3> Career </h3>
+				<small> A series of talks aimed at building a solid career in Software! Free Pizzas included!! </small>
+				<ul class = "catalog-links">
+					<% for (var i=0;i<obj.length; i++) { %>
+						<% if(obj[i].topic === "Career"){ %>
+							<li> <a class = "catalog-link" href="connection?connectionID=<%- obj[i].connectionID -%>"> <%= obj[i].name %></a> </li>
+						<% } %>
+					<% } %>
+				</ul>
+				<BR>
+	</main>
+
+	<%- include('partials/circle-theme'); -%>
+
+	<%- include('partials/footer'); -%>
+</body>
+</html>
