@@ -1,6 +1,6 @@
 class Connection {
     constructor(connectionID, name, host, topic, details, date, time){
-      this.connectionID = connectionID;
+      this._connectionID = connectionID;
       this._name = name;
       this._host = host;
       this._topic = topic;
