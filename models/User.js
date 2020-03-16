@@ -1,5 +1,6 @@
 class User {
     constructor(userID, firstName, lastName, emailAddress, addressLine1, addressLine2, city, state, zip, country){
+      this._isHost = false;
       this._userID = userID;
       this._firstName = firstName;
       this._lastName = lastName;
@@ -47,9 +48,18 @@ class User {
       }
     }
 
+    get isHost(){
+      return this._isHost;
+    }
+    set isHost(newIsHost) {
+      this._isHost = newIsHost;
+    }
+
     get userID() {
       return this._userID;
     }
+
+
 
     get firstName(){
       return this._firstName;

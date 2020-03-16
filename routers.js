@@ -20,4 +20,5 @@ router.get("/newConnection", connectionController.renderNewConnection);
 router.post("/newConnection", connectionController.postRenderNewConnection);
 
 router.get("/login", userController.renderLoginPage);
+
 module.exports = router;

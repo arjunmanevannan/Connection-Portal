@@ -8,6 +8,7 @@ class Connection {
       this._date = date;
       this._time = time;
     }
+    
     get name() {
       return this._name.toUpperCase();
     }

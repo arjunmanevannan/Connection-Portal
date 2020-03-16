@@ -1,22 +1,11 @@
-class UserProfile {
-    constructor(user, userConnection){
-      this._user = user;
-      this._userConnection = userConnection;
-    }
+const user = require('./../models/User.js')
+const userConnection = require('./../models/UserConnection.js')
+const userProfile = require('./../models/UserProfile.js')
+const connection = require('./../models/Connection.js')
 
-    get user() {
-      return this._user;
-    }
-    set user(newUser) {
-      this._user = newUser;
-    }
+var con1 = new connection('1111','Gestures','Arjun Manevannan','Android','Test', '12-07-2019', '04:12');
+var usr1 = new user('1111','Arjun','Manevannan','test@gmail.com');
+var uc1 = new userConnection(con1,'Yes');
+var up1 = new userProfile(usr1, uc1);
 
-    get userConnection(){
-      return this._userConnection;
-    }
-    set userConnection(newUserConnection) {
-      this._userConnection = newUserConnection;
-    }
-}
-
-module.exports = UserProfile;
+console.log(up1);
