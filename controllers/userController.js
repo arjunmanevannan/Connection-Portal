@@ -1,14 +1,30 @@
+var up1 = require('./../utils/UserProfileDB.js')
+
 exports.renderLoginPage = (req,res) => {
   res.render('login');
 }
 
 exports.postRenderLoginPage = (req, res) => {
-  var newUserProfile = new 
+    var user_email = req.body.user.email;
+    console.log(user_email); //search for the user profile with the email address
+    req.session.theUser = up1;
 
-  var newConnection = new Connection(req.body.connection.topic+Math.random(), req.body.connection.name, req.body.connection.host, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
-  console.log(newConnection);
-  connectionDB.addConnection(newConnection);
-  var connections = connectionDB.getConnections();
-  console.log(connections.length);
-  res.render('connections', {obj:connections});
+    console.log(up1);
+    res.render('savedConnections', {user: req.session.theUser});
+
+}
+
+exports.renderLogoutPage = (req,res) => {
+  console.log("Before");
+  console.log(req.session.theUser);
+  req.session.theUser = null;
+  console.log("After");
+  console.log(req.session.theUser);
+  console.log("Done");
+  res.render('index', {user:req.session.theUser});
+
+    // req.session.destroy((err) => {
+    //
+    // })// will always fire after session is destroyed
+  // res.render('index');
 }

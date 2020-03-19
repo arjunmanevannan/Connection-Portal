@@ -9,11 +9,15 @@
 	</head>
 
 	<body>
-
-	<header>
-	<%- include('partials/header'); -%>
-	<%- include('partials/site-navigation'); -%>
-	</header>
+		<header>
+			<% if(user == null) { %>
+				<%- include('partials/header'); -%>
+				<%- include('partials/site-navigation'); -%>
+			<% } else { %>
+				<%- include('partials/header-logged-in'); -%>
+				<%- include('partials/site-navigation-logged-in'); -%>
+			<% } %>
+		</header>
 
 	<main>
 		<h2> Tell us about your issue so that we can help you quickly!</h2><BR><BR>

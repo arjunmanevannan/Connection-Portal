@@ -16,7 +16,7 @@
 
 	<main class = "test">
 		<div class = "caption">
-			<h3> Norm's Connections: </h3>
+			<h3> <%- user._user._firstName -%>'s Connection </h3>
 		</div>
 		<BR>
 		<table style="width:100%">
@@ -26,19 +26,15 @@
 			<th>Going</th>
 			<th> </th>
 		</tr>
-		<tr>
-			<td>Working with NetBeans</td>
-			<td>JAVA SE</td>
-			<td>Yes</td>
-			<td> <button onclick = "location.href='savedConnections'" type="button">Update</button> <button onclick = "location.href='connection'" type="button">Delete</button> </td>
-		</tr>
-		<tr>
-			<td>Build Good Resume</td>
-			<td>Career</td>
-			<td>Maybe</td>
-			<td> <button onclick = "location.href='savedConnections'" type="button">Update</button> <button onclick = "location.href='connection'" type="button">Delete</button> </td>
 
-		</tr>
+		<% for (var i=0; i<user._userConnection.length; i++){ %>
+			<tr>
+				<td> <%- user._userConnection[i]._connection._name -%> </td>
+				<td> <%- user._userConnection[i]._connection._topic -%> </td>
+				<td> <%- user._userConnection[i]._rsvp -%> </td>
+				<td> <button onclick = "location.href='savedConnections'" type="button">Update</button> <button onclick = "location.href='connection'" type="button">Delete</button> </td>
+			</tr>
+		<% } %>
 		</table>
 	</main>
 	<%- include('partials/circle-theme'); -%>

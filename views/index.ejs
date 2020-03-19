@@ -10,10 +10,15 @@
 
 	<body>
 
-	<header>
-	<%- include('partials/header'); -%>
-	<%- include('partials/site-navigation'); -%>
-	</header>
+		<header>
+			<% if(user == null) { %>
+				<%- include('partials/header'); -%>
+				<%- include('partials/site-navigation'); -%>
+			<% } else { %>
+				<%- include('partials/header-logged-in'); -%>
+				<%- include('partials/site-navigation-logged-in'); -%>
+			<% } %>
+		</header>
 
 	<main>
 		Welcome to TechMasters! <BR><BR>

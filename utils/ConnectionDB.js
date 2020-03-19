@@ -8,7 +8,7 @@ var con6 = new Connection('1116','Resume Building','Arjun Manevannan','Career', 
 var con7 = new Connection('1117','How to tackle the Phone/Skype Interview!','Arjun Manevannan','Career','Test', '12-07-2019', '06:12');
 var con8 = new Connection('1118','Importance of Grooming','Arjun Manevannan','Career','Test', '12-07-2019', '06:12');
 
-let connections = [con1,con2,con3,con4,con5,con6,con7,con8];
+var connections = [con1,con2,con3,con4,con5,con6,con7,con8];
 
 const getConnections = function(){
   return connections;

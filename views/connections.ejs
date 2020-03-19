@@ -10,8 +10,14 @@
 	</head>
 	<body>
 	<header>
-	<%- include('partials/header'); -%>
-	<%- include('partials/site-navigation'); -%>
+		<% if(user == null) { %>
+			<%- include('partials/header'); -%>
+			<%- include('partials/site-navigation'); -%>
+		<% } else { %>
+			<%- include('partials/header-logged-in'); -%>
+			<%- include('partials/site-navigation-logged-in'); -%>
+		<% } %>
+	</header>
 
 	<main class = "catalogMain">
 				<h3> Android </h3>

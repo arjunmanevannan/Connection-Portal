@@ -8,7 +8,7 @@ exports.renderSavedConnections = (req,res) => {
 
 exports.renderConnections = (req, res) => {
   let connections = connectionDB.getConnections();
-  res.render('connections', {obj:connections});
+  res.render('connections', {obj:connections, user:req.session.theUser});
 }
 
 exports.renderNewConnection = (req, res) => {

@@ -5,42 +5,42 @@ class User {
       this._firstName = firstName;
       this._lastName = lastName;
       this._emailAddress = emailAddress;
-      if(typeof addressLine1 === undefined){
+      if(typeof addressLine1 === 'undefined'){
         this._addressLine1 = "";
       }
       else{
         this.addressLine1 = addressLine1;
       }
 
-      if(typeof addressLine2 === undefined){
+      if(typeof addressLine2 === 'undefined'){
         this._addressLine2 = "";
       }
       else{
         this.addressLine2 = addressLine2;
       }
 
-      if(typeof city === undefined){
+      if(typeof city === 'undefined'){
         this._city = "";
       }
       else{
         this._city = city;
       }
 
-      if(typeof state === undefined){
+      if(typeof state === 'undefined'){
         this._state = "";
       }
       else{
         this._state = state;
       }
 
-      if(typeof zip === undefined){
+      if(typeof zip === 'undefined'){
         this._zip = "";
       }
       else{
         this._zip = zip;
       }
 
-      if(typeof country === undefined){
+      if(typeof country === 'undefined'){
         this._country = "";
       }
       else{
