@@ -11,8 +11,7 @@ router.use(session({
   name: 'server',
   secret:'test',
   saveUninitialized: false,
-  resave: false,
-  // store: new FileStore()
+  resave: false
 }));
 
 router.get("/", homeController.renderHomePage);

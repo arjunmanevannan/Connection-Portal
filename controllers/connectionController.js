@@ -21,14 +21,12 @@ exports.renderNewConnection = (req, res) => {
 }
 
 exports.renderConnection = (req, res) => {
-  console.log(req.query.connectionID);
   if(typeof req.query.connectionID === 'undefined'){
     console.log("No connection ID given. Redirecting to connections");
     var connections = connectionDB.getConnections();
     res.render('connections', {obj:connections, user:req.session.theUser});
   }
   else if(typeof req.query.connectionID !== 'undefined') {
-    console.log("RAMASAMY");
     var connection = connectionDB.getConnection(req.query.connectionID);
     if(connection!==null){
       res.render('connection', {obj:connection, user:req.session.theUser});
