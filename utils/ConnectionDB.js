@@ -20,7 +20,7 @@ const addConnection = function(connection){
 
 const getConnection = function (givenConnectionID){
   for(var i=0;i<connections.length;i++){
-    if(connections[i].connectionID == givenConnectionID){
+    if(connections[i]._connectionID == givenConnectionID){
       return connections[i];
       break;
     }

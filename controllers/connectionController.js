@@ -12,7 +12,12 @@ exports.renderConnections = (req, res) => {
 }
 
 exports.renderNewConnection = (req, res) => {
-  res.render('newConnection');
+  if(req.session.theUser == null){
+    res.render('login', {user:req.session.theUser});
+  }
+  else{
+    res.render('newConnection', {user: req.session.theUser});
+  }
 }
 
 exports.renderConnection = (req, res) => {
@@ -20,17 +25,18 @@ exports.renderConnection = (req, res) => {
   if(typeof req.query.connectionID === 'undefined'){
     console.log("No connection ID given. Redirecting to connections");
     var connections = connectionDB.getConnections();
-    res.render('connections', {obj:connections});
+    res.render('connections', {obj:connections, user:req.session.theUser});
   }
   else if(typeof req.query.connectionID !== 'undefined') {
+    console.log("RAMASAMY");
     var connection = connectionDB.getConnection(req.query.connectionID);
     if(connection!==null){
-      res.render('connection', {obj:connection});
+      res.render('connection', {obj:connection, user:req.session.theUser});
     }
     else{
       console.log("There is no talk hosted in the mentioned ID. Redirecting to all connections");
       var connections = connectionDB.getConnections();
-      res.render('connections', {obj:connections});
+      res.render('connections', {obj:connections, user:req.session.theUser});
     }
   }
 }
@@ -41,5 +47,5 @@ exports.postRenderNewConnection = (req, res) => {
   connectionDB.addConnection(newConnection);
   var connections = connectionDB.getConnections();
   console.log(connections.length);
-  res.render('connections', {obj:connections});
+  res.render('connections', {obj:connections, user:req.session.theUser});
 }

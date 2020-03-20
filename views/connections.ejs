@@ -24,8 +24,8 @@
 				<small> A series of talks hosted by ITCS 5180</small>
 				<ul class = "catalog-links">
 					<% for (var i=0;i<obj.length; i++) { %>
-						<% if(obj[i].topic === "Android"){ %>
-						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[i].connectionID -%>"> <%= obj[i].name %> </a> </li>
+						<% if(obj[i]._topic === "Android"){ %>
+						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[i]._connectionID -%>"> <%= obj[i]._name %> </a> </li>
 						<% } %>
 					<% } %>
 				</ul>
@@ -35,8 +35,8 @@
 					<small> A series of talks aimed to help students get started with Java. No prior coding experience needed! </small>
 					<ul class = "catalog-links">
 						<% for (var i=0;i<obj.length; i++) { %>
-							<% if(obj[i].topic === "Introduction to JAVA"){ %>
-								<li> <a class = "catalog-link" href="connection?connectionID=<%- obj[i].connectionID -%>"> <%= obj[i].name %> </a> </li>
+							<% if(obj[i]._topic === "Introduction to JAVA"){ %>
+								<li> <a class = "catalog-link" href="connection?connectionID=<%- obj[i]._connectionID -%>"> <%= obj[i]._name %> </a> </li>
 							<% } %>
 						<% } %>
 					</ul>
@@ -46,8 +46,8 @@
 				<small> A series of talks aimed at building a solid career in Software! Free Pizzas included!! </small>
 				<ul class = "catalog-links">
 					<% for (var i=0;i<obj.length; i++) { %>
-						<% if(obj[i].topic === "Career"){ %>
-							<li> <a class = "catalog-link" href="connection?connectionID=<%- obj[i].connectionID -%>"> <%= obj[i].name %></a> </li>
+						<% if(obj[i]._topic === "Career"){ %>
+							<li> <a class = "catalog-link" href="connection?connectionID=<%- obj[i]._connectionID -%>"> <%= obj[i]._name %></a> </li>
 						<% } %>
 					<% } %>
 				</ul>
