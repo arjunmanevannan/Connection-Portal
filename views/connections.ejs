@@ -19,52 +19,24 @@
 		<% } %>
 	</header>
 
-
-
-		<h3> <%= obj[0]._topic %> </h3>
 		<% var topicCount = [ ]; %>
 		<% for (var i=0; i<obj.length; i++) { %>
 			<% topicCount.push(obj[i]._topic);%>
 		<% } %>
 		<% var uniqueTopics = Array.from(new Set(topicCount)) %>
-		<h3> "EEW" <%= uniqueTopics.length %> </h3>
-
-
-
 
 	<main class = "catalogMain">
-				<h3> Android </h3>
-				<small> A series of talks hosted by ITCS 5180</small>
+		<% for (var i=0; i<uniqueTopics.length; i++) { %>
+			<h3> <%= uniqueTopics[i] %> </h3>
 				<ul class = "catalog-links">
-					<% for (var i=0;i<obj.length; i++) { %>
-						<% if(obj[i]._topic === "Android"){ %>
-						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[i]._connectionID -%>"> <%= obj[i]._name %> </a> </li>
+					<% for (var j=0;j<obj.length; j++) { %>
+						<% if(obj[j]._topic === uniqueTopics[i]){ %>
+						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[j]._connectionID -%>"> <%= obj[j]._name %> </a> </li>
 						<% } %>
 					<% } %>
 				</ul>
 				<BR>
-
-				<h3> Introduction to JAVA </h3>
-					<small> A series of talks aimed to help students get started with Java. No prior coding experience needed! </small>
-					<ul class = "catalog-links">
-						<% for (var i=0;i<obj.length; i++) { %>
-							<% if(obj[i]._topic === "Introduction to JAVA"){ %>
-								<li> <a class = "catalog-link" href="connection?connectionID=<%- obj[i]._connectionID -%>"> <%= obj[i]._name %> </a> </li>
-							<% } %>
-						<% } %>
-					</ul>
-					<BR>
-
-				<h3> Career </h3>
-				<small> A series of talks aimed at building a solid career in Software! Free Pizzas included!! </small>
-				<ul class = "catalog-links">
-					<% for (var i=0;i<obj.length; i++) { %>
-						<% if(obj[i]._topic === "Career"){ %>
-							<li> <a class = "catalog-link" href="connection?connectionID=<%- obj[i]._connectionID -%>"> <%= obj[i]._name %></a> </li>
-						<% } %>
-					<% } %>
-				</ul>
-				<BR>
+		<% } %>
 	</main>
 
 	<%- include('partials/circle-theme'); -%>
