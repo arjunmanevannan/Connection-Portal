@@ -1,5 +1,6 @@
 var up1 = require('./../utils/UserProfileDB.js')
 var userDB = require('./../utils/UserDB.js')
+var userProfileDB = require('./../utils/UserProfileDB.js')
 
 exports.renderLoginPage = (req,res) => {
   res.render('login');
@@ -7,14 +8,11 @@ exports.renderLoginPage = (req,res) => {
 
 exports.postRenderLoginPage = (req, res) => {
     var user_email = req.body.user.email;
-
-    console.log(user_email); //search for the user profile with the email address
     var usr = userDB.getUser(user_email);
-    console.log("FGFGFG "+usr._firstName);
+    var up1 = userProfileDB.initUserProfile(usr);
     req.session.theUser = up1;
     console.log(up1);
     res.render('savedConnections', {user: req.session.theUser});
-
 }
 
 exports.renderLogoutPage = (req,res) => {

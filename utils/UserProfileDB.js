@@ -3,14 +3,17 @@ const userConnection = require('./../models/UserConnection.js')
 const userProfile = require('./../models/UserProfile.js')
 const connection = require('./../models/Connection.js')
 
-var con1 = new connection('1111','Gestures','Arjun Manevannan','Android','Test', '12-07-2019', '04:12');
-var con2 = new connection('1112','New in Android 10!','Arjun Manevannan','Android','Test', '12-07-2019', '05:12');
+const initUserProfile = function (user){
+  var uc = [];
+  var up1 = new userProfile(user, uc);
+  return up1;
+}
 
-var usr1 = new user('1111','Arjun','Manevannan','test@gmail.com');
+const addUserConnection = function (up1, rsvp){
+  var uc = [];
+  up1._userConnection.push(new userConnection(connection, rsvp));
+  return up1;
+}
 
-var uc1 = new userConnection(con1,'Yes');
-var uc2 = new userConnection(con2,'Yes');
-var uc = [uc1, uc2];
-var up1 = new userProfile(usr1, uc);
-
-module.exports = up1;
+module.exports.initUserProfile = initUserProfile;
+module.exports.addUserConnection = addUserConnection;
