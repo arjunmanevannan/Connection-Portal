@@ -3,7 +3,7 @@ const Connection = require('./../models/Connection.js')
 
 
 exports.renderSavedConnections = (req,res) => {
-  res.render('savedConnections');
+  res.render('savedConnections', {user:req.session.theUser});
 }
 
 exports.renderConnections = (req, res) => {
