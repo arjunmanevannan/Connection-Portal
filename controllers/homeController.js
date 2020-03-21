@@ -1,3 +1,6 @@
+const User = require('./../models/User.js')
+const UserDB = require('./../utils/UserDB.js')
+
 exports.renderAboutPage = (req, res) => {
   res.render("about", {user:req.session.theUser});
 }
@@ -8,4 +11,17 @@ exports.renderHomePage = (req,res) => {
 
 exports.renderContactPage = (req,res) => {
   res.render('contact', {user:req.session.theUser});
+}
+
+exports.renderNewUserPage = (req,res) => {
+  res.render('newUser');
+}
+
+exports.renderPostNewUserPage = (req, res) => {
+  var newUser = new User(req.body.user.emailAddress+Math.random(), req.body.user.firstName, req.body.user.lastName, req.body.user.emailAddress, req.body.user.addressLine1, req.body.user.addressLine2, req.body.user.city, req.body.user.state, req.body.user.zip, req.body.user.country);
+  UserDB.addUser(newUser);
+  var users = UserDB.getUsers();
+  console.log(users.length);
+  res.redirect('/', 200, {user: req.session.theUser});
+  // res.redirect('index', );
 }

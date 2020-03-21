@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
+		<link rel = "stylesheet" href="../public/css/style.css" />
+		<title> Homepage </title>
+	</head>
+
+	<body>
+
+	<header>
+	<%- include('partials/header'); -%>
+	<%- include('partials/site-navigation'); -%>
+	</header>
+
+  <div class = "form">
+  	<h1>Sign up below!</h1>
+
+		<form action = "/newUser" method="post">
+			<label for="user[firstName]"> First Name: </label><br>
+			<input type="text" name="user[firstName]"><br>
+
+      <label for="user[lastName]"> Last Name: </label><br>
+			<input type="text" name="user[lastName]"><br><br>
+
+      <label for="user[emailAddress]"> Email Address: </label><br>
+			<input type="text" name="user[emailAddress]"><br><br>
+
+      <label for="user[addressLine1]"> Address Line 1: </label><br>
+			<input type="text" name="user[addressLine1]"><br><br>
+
+      <label for="user[addressLine2]"> Address Line 2: </label><br>
+			<input type="text" name="user[addressLine2]"><br><br>
+
+      <label for="user[city]"> City: </label><br>
+			<input type="text" name="user[city]"><br><br>
+
+      <label for="user[state]"> State: </label><br>
+			<input type="text" name="user[state]"><br><br>
+
+      <label for="user[zip]"> Zip: </label><br>
+			<input type="text" name="user[zip]"><br><br>
+
+			<label for="user[country]"> Country: </label><br>
+			<input type="text" name="user[country]">
+
+			<button type="submit">Submit</button>
+		</form>
+</div>
+
+	<%- include('partials/circle-theme'); -%>
+
+	<%- include('partials/footer'); -%>
+
+	</body>
+</html>

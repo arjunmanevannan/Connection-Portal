@@ -11,6 +11,10 @@ const getUsers = function(){
   return users;
 }
 
+const addUser = function(user){
+  users.push(user);
+}
+
 const getUser = function(userEmail){
   var users = getUsers();
   for(var i=0; i<users.length; i++){
@@ -25,3 +29,4 @@ const getUser = function(userEmail){
 
 module.exports.getUsers = getUsers;
 module.exports.getUser = getUser;
+module.exports.addUser = addUser;

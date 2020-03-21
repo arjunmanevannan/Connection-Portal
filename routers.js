@@ -17,7 +17,8 @@ router.use(session({
 router.get("/", homeController.renderHomePage);
 router.get("/about", homeController.renderAboutPage);
 router.get("/contact", homeController.renderContactPage);
-
+router.get("/newUser", homeController.renderNewUserPage);
+router.post("/newUser", homeController.renderPostNewUserPage);
 
 router.get("/savedConnections", connectionController.renderSavedConnections);
 router.get("/connections", connectionController.renderConnections);

@@ -9,11 +9,19 @@ const initUserProfile = function (user){
   return up1;
 }
 
-const addUserConnection = function (up1, rsvp){
-  var uc = [];
+const addUserConnection = function (up1, connection, rsvp){
   up1._userConnection.push(new userConnection(connection, rsvp));
   return up1;
 }
 
+const removeUserConnection = function (up1, connection, rsvp){
+  up1._userConnection.push(new userConnection(connection, rsvp));
+  var uc = up1._userConnection.filter(con => con._connectionID != connection._connectionID);
+  up1._userConnection = uc;
+  return up1;
+}
+
+
 module.exports.initUserProfile = initUserProfile;
 module.exports.addUserConnection = addUserConnection;
+module.exports.removeUserConnection = removeUserConnection;
