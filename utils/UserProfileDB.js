@@ -11,12 +11,23 @@ const initUserProfile = function (user){
 
 const addUserConnection = function (up1, connection, rsvp){
   up1._userConnection.push(new userConnection(connection, rsvp));
+  // for(i=0; i<up1._userConnection.length;i++){
+  //   console.log(up1._userConnection[i]);
+  // }
   return up1;
 }
 
+function arrayRemove(arr, value) {
+	return arr.filter(function(ele){
+    console.log(ele._connection._connectionID);
+		return ele._connection._connectionID != value._connectionID;
+	});
+}
+
+// var result = arrayRemove(array, 6);// result = [1, 2, 3, 4, 5, 7, 8, 9, 0]
+
 const removeUserConnection = function (up1, connection, rsvp){
-  up1._userConnection.push(new userConnection(connection, rsvp));
-  var uc = up1._userConnection.filter(con => con._connectionID != connection._connectionID);
+  var uc = arrayRemove(up1._userConnection, connection);
   up1._userConnection = uc;
   return up1;
 }

@@ -11,12 +11,10 @@ exports.postRenderLoginPage = (req, res) => {
     var usr = userDB.getUser(user_email);
     var up1 = userProfileDB.initUserProfile(usr);
     req.session.theUser = up1;
-    console.log(up1);
     res.render('savedConnections', {user: req.session.theUser});
 }
 
 exports.renderLogoutPage = (req,res) => {
-  console.log(req.session.theUser);
   req.session.theUser = null;
   res.render('index', {user:req.session.theUser});
 }

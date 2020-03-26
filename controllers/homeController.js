@@ -23,5 +23,4 @@ exports.renderPostNewUserPage = (req, res) => {
   var users = UserDB.getUsers();
   console.log(users.length);
   res.redirect('/', 200, {user: req.session.theUser});
-  // res.redirect('index', );
 }

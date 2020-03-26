@@ -1,5 +1,6 @@
 const connectionDB = require('./../utils/ConnectionDB.js')
 const Connection = require('./../models/Connection.js')
+const UserProfileDB = require('./../utils/UserProfileDB.js')
 
 
 exports.renderSavedConnections = (req,res) => {
@@ -41,9 +42,21 @@ exports.renderConnection = (req, res) => {
 
 exports.postRenderNewConnection = (req, res) => {
   var newConnection = new Connection(req.body.connection.topic+Math.random(), req.body.connection.name, req.body.connection.host, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
-  console.log(newConnection);
   connectionDB.addConnection(newConnection);
   var connections = connectionDB.getConnections();
-  console.log(connections.length);
   res.render('connections', {obj:connections, user:req.session.theUser});
+}
+
+exports.renderYesPage = (req, res) => {
+  var connection = connectionDB.getConnection(req.query.connectionID);
+  UserProfileDB.addUserConnection(req.session.theUser, connection, "Yes");
+  res.redirect('/',200, {user: req.session.theUser});
+}
+
+exports.renderNoPage = (req, res) => {
+  var connection = connectionDB.getConnection(req.query.connectionID);
+
+  UserProfileDB.removeUserConnection(req.session.theUser, connection, "No");
+
+  res.redirect('/',200, {user: req.session.theUser});
 }
