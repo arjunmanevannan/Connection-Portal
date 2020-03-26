@@ -47,16 +47,14 @@ exports.postRenderNewConnection = (req, res) => {
   res.render('connections', {obj:connections, user:req.session.theUser});
 }
 
-exports.renderYesPage = (req, res) => {
+exports.interestedConnection = (req, res) => {
   var connection = connectionDB.getConnection(req.query.connectionID);
   UserProfileDB.addUserConnection(req.session.theUser, connection, "Yes");
   res.redirect('/',200, {user: req.session.theUser});
 }
 
-exports.renderNoPage = (req, res) => {
+exports.updateRSVP = (req, res) => {
   var connection = connectionDB.getConnection(req.query.connectionID);
-
-  UserProfileDB.removeUserConnection(req.session.theUser, connection, "No");
-
+  UserProfileDB.updateUserRsvp(req.session.theUser, connection, req.query.rsvp);
   res.redirect('/',200, {user: req.session.theUser});
 }

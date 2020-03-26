@@ -4,7 +4,7 @@ const connectionController = require("./controllers/connectionController");
 
 
 
-connectionRouter.get("/yes", connectionController.renderYesPage);
-connectionRouter.get("/no", connectionController.renderNoPage);
+connectionRouter.get("/interested", connectionController.interestedConnection);
+connectionRouter.get("/updatersvp", connectionController.updateRSVP);
 
 module.exports = connectionRouter;

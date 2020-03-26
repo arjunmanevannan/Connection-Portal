@@ -35,17 +35,17 @@
 			<p id = "pollText"> Are you going? 3 people are going </p>
 			<BR>
 			<div id = "pollButtons">
-				if the user hasnt added the connection already
+
 				<button class = "Yes" onclick = <% if(user) { %>
-					"location.href='connection/yes?connectionID=<%- obj._connectionID -%>'"
+					"location.href='connection/interested?connectionID=<%- obj._connectionID -%>'"
 				<% }else{ %>
 					"location.href='login'"
 				<% } %>> Interested </a> </li>
-				else {
-					<button class = "Yes" onclick = "location.href='connection/yes?connectionID=<%- obj._connectionID -%>'"> Yes </a> </li>
-					<button class = "No" onclick = "location.href='connection/no?connectionID=<%- obj._connectionID -%>'"> No </a> </li>
-					<button class = "Maybe" onclick = "location.href='savedConnections'" type="button"> Maybe </button>
-				}
+
+					<button class = "Yes" onclick = "location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Yes'"> Yes </a> </li>
+					<button class = "No" onclick = "location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=No'"> No </a> </li>
+					<button class = "Maybe" onclick = "location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Yes'"> Maybe </a> </li>
+
 			</div>
 		</section>
 
