@@ -30,7 +30,7 @@
 		<h4> Details </h4>
 		<%= obj._details %>
 		</section>
-		
+
 		<% if((user==null) || (user._user._userID != obj._host._userID)){ %>
 			<section class = "itemPoll">
 				<p id = "pollText"> Are you going? 3 people are going </p>
@@ -41,19 +41,19 @@
 						"location.href='connection/interested?connectionID=<%- obj._connectionID -%>'"
 					<% }else{ %>
 						"location.href='login'"
-					<% } %>> Yes </a> </li>
+					<% } %>> Yes </button>
 
 					<button class = "No" onclick = <% if(user) { %>
 						"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=No'"
 					<% }else{ %>
 						"location.href='login'"
-					<% } %>> No </a> </li>
+					<% } %>> No </button>
 
 					<button class = "Maybe" onclick = <% if(user) { %>
 						"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Maybe'"
 					<% }else{ %>
 						"location.href='login'"
-					<% } %>> Maybe </a> </li>
+					<% } %>> Maybe </button>
 
 				</div>
 			</section>
