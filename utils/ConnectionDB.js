@@ -17,7 +17,9 @@ var connections = [con1,con2,con3,con4,con5,con6,con7,con8];
 const getConnections = function(){
   return connections;
 }
-
+const setConnections = function(newConnections){
+  connections = newConnections;
+}
 const addConnection = function(connection){
   connections.push(connection);
 }
@@ -32,7 +34,21 @@ const getConnection = function (givenConnectionID){
   return null;
 }
 
+function _arrayRemove(arr, value) {
+	return arr.filter(function(ele){
+    console.log(ele._connectionID);
+		return ele._connectionID != value;
+	});
+}
+
+const deleteConnection = function(id) {
+  var connections = getConnections();
+  var newConnectionsList = _arrayRemove(connections, id);
+  setConnections(newConnectionsList);
+}
+
 
 module.exports.addConnection = addConnection;
 module.exports.getConnection = getConnection;
 module.exports.getConnections = getConnections;
+module.exports.deleteConnection = deleteConnection;

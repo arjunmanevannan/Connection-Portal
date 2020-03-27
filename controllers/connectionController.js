@@ -73,3 +73,9 @@ exports.removeUserConnection = (req, res) => {
   UserProfileDB.removeUserConnection(req.session.theUser, connection)
   res.redirect('/savedConnections',200, {user: req.session.theUser});
 }
+
+exports.deleteConnection = (req, res) => {
+  var id = req.query.connectionID;
+  connectionDB.deleteConnection(id);
+  res.redirect('/savedConnections', 200, {user:req.session.theUser});
+}

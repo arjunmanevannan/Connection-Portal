@@ -57,7 +57,13 @@
 
 				</div>
 			</section>
-		<% } %>
+		<% } else { %>
+			<button onclick = <% if(user) { %>
+				"location.href='connection/deleteConnection?connectionID=<%- obj._connectionID -%>'"
+			<% }else{ %>
+				"location.href='login'"
+			<% } %>> Delete this Connection </button>
+	<% } %>
 
 
 	</main>
