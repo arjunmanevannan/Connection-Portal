@@ -24,38 +24,41 @@
 		<h2> <%= obj._name %> </h2>
 			<section>
 				<p style="float: left;"><img src="../public/img/logo_netbeans_red.png" alt = "netbeans_logo" height="100" width="100"></p>
-				<small>Hosted by: <%= obj._host %> <BR> Date: <%= obj._date %> <BR> Time: <%= obj._time %></small>
+				<small>Hosted by: <%= obj._host._firstName %> <BR> Date: <%= obj._date %> <BR> Time: <%= obj._time %></small>
 			</section>
 			<BR>
 		<h4> Details </h4>
 		<%= obj._details %>
 		</section>
+		
+		<% if((user==null) || (user._user._userID != obj._host._userID)){ %>
+			<section class = "itemPoll">
+				<p id = "pollText"> Are you going? 3 people are going </p>
+				<BR>
+				<div id = "pollButtons">
 
-		<section class = "itemPoll">
-			<p id = "pollText"> Are you going? 3 people are going </p>
-			<BR>
-			<div id = "pollButtons">
+					<button class = "Yes" onclick = <% if(user) { %>
+						"location.href='connection/interested?connectionID=<%- obj._connectionID -%>'"
+					<% }else{ %>
+						"location.href='login'"
+					<% } %>> Yes </a> </li>
 
-				<button class = "Yes" onclick = <% if(user) { %>
-					"location.href='connection/interested?connectionID=<%- obj._connectionID -%>'"
-				<% }else{ %>
-					"location.href='login'"
-				<% } %>> Yes </a> </li>
+					<button class = "No" onclick = <% if(user) { %>
+						"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=No'"
+					<% }else{ %>
+						"location.href='login'"
+					<% } %>> No </a> </li>
 
-				<button class = "No" onclick = <% if(user) { %>
-					"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=No'"
-				<% }else{ %>
-					"location.href='login'"
-				<% } %>> No </a> </li>
+					<button class = "Maybe" onclick = <% if(user) { %>
+						"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Maybe'"
+					<% }else{ %>
+						"location.href='login'"
+					<% } %>> Maybe </a> </li>
 
-				<button class = "Maybe" onclick = <% if(user) { %>
-					"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Maybe'"
-				<% }else{ %>
-					"location.href='login'"
-				<% } %>> Maybe </a> </li>
+				</div>
+			</section>
+		<% } %>
 
-			</div>
-		</section>
 
 	</main>
 	<%- include('partials/circle-theme'); -%>

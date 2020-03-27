@@ -30,6 +30,7 @@ exports.renderConnection = (req, res) => {
   else if(typeof req.query.connectionID !== 'undefined') {
     var connection = connectionDB.getConnection(req.query.connectionID);
     if(connection!==null){
+      // console.log(req.session.theUser._user._userID);
       res.render('connection', {obj:connection, user:req.session.theUser});
     }
     else{
@@ -41,7 +42,7 @@ exports.renderConnection = (req, res) => {
 }
 
 exports.postRenderNewConnection = (req, res) => {
-  var newConnection = new Connection(req.body.connection.topic+Math.random(), req.body.connection.name, req.body.connection.host, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
+  var newConnection = new Connection(req.body.connection.topic+Math.random(), req.body.connection.name, req.session.theUser._user, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
   connectionDB.addConnection(newConnection);
   var connections = connectionDB.getConnections();
   res.render('connections', {obj:connections, user:req.session.theUser});
