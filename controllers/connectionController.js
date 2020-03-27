@@ -3,7 +3,26 @@ const Connection = require('./../models/Connection.js')
 const UserProfileDB = require('./../utils/UserProfileDB.js')
 
 
+// const addresses = [...]; // Some array I got from async call
+//
+// const uniqueAddresses = Array.from(new Set(addresses.map(a => a.id)))
+//  .map(id => {
+//    return addresses.find(a => a.id === id)
+//  })
+
+
 exports.renderSavedConnections = (req,res) => {
+
+  var connections = req.session.theUser._userConnection;
+
+  const uniqueConnections = Array.from(new Set(connections.map(c => c._connection._connectionID)))
+  .map(id => {
+    return connections.find(c => c._connection._connectionID === id)
+  })
+  console.log(connections.length);
+
+  console.log(uniqueConnections.length);
+  req.session.theUser._userConnection = uniqueConnections;
   res.render('savedConnections', {user:req.session.theUser});
 }
 

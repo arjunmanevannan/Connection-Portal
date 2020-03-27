@@ -35,8 +35,6 @@ function _arrayRemove(arr, value) {
 	});
 }
 
-// var result = arrayRemove(array, 6);// result = [1, 2, 3, 4, 5, 7, 8, 9, 0]
-
 const removeUserConnection = function (up1, connection){
   var uc = _arrayRemove(up1._userConnection, connection);
   up1._userConnection = uc;
