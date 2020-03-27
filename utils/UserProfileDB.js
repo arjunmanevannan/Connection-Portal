@@ -11,14 +11,10 @@ const initUserProfile = function (user){
 
 const addUserConnection = function (up1, connection, rsvp){
   up1._userConnection.push(new userConnection(connection, rsvp));
-  // for(i=0; i<up1._userConnection.length;i++){
-  //   console.log(up1._userConnection[i]);
-  // }
   return up1;
 }
 
 const updateUserRsvp = function (up1, connection, rsvp){
-  // console.log(up1._userConnection[0]._connection._connectionID);
   for(i=0; i<up1._userConnection.length;i++){
     if(up1._userConnection[i]._connection._connectionID == connection._connectionID){
         up1._userConnection[i]._rsvp = rsvp;

@@ -4,7 +4,6 @@ const UserProfileDB = require('./../utils/UserProfileDB.js')
 
 
 exports.renderSavedConnections = (req,res) => {
-
   var connections = req.session.theUser._userConnection;
   const uniqueConnections = Array.from(new Set(connections.map(c => c._connection._connectionID)))
   .map(id => {
