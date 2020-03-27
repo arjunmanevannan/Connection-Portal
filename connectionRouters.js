@@ -6,5 +6,6 @@ const connectionController = require("./controllers/connectionController");
 
 connectionRouter.get("/interested", connectionController.interestedConnection);
 connectionRouter.get("/updatersvp", connectionController.updateRSVP);
+connectionRouter.get("/delete", connectionController.removeUserConnection);
 
 module.exports = connectionRouter;

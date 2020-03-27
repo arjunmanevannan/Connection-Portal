@@ -40,11 +40,19 @@
 					"location.href='connection/interested?connectionID=<%- obj._connectionID -%>'"
 				<% }else{ %>
 					"location.href='login'"
-				<% } %>> Interested </a> </li>
+				<% } %>> Yes </a> </li>
 
-					<button class = "Yes" onclick = "location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Yes'"> Yes </a> </li>
-					<button class = "No" onclick = "location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=No'"> No </a> </li>
-					<button class = "Maybe" onclick = "location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Yes'"> Maybe </a> </li>
+				<button class = "No" onclick = <% if(user) { %>
+					"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=No'"
+				<% }else{ %>
+					"location.href='login'"
+				<% } %>> No </a> </li>
+
+				<button class = "Maybe" onclick = <% if(user) { %>
+					"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Maybe'"
+				<% }else{ %>
+					"location.href='login'"
+				<% } %>> Maybe </a> </li>
 
 			</div>
 		</section>

@@ -1,14 +1,14 @@
 class Connection {
-    constructor(connectionID, name, host, topic, details, date, time){
+    constructor(connectionID, name, user, topic, details, date, time){
       this._connectionID = connectionID;
       this._name = name;
-      this._host = host;
+      this._host = user;
       this._topic = topic;
       this._details = details;
       this._date = date;
       this._time = time;
     }
-    
+
     get name() {
       return this._name.toUpperCase();
     }

@@ -58,3 +58,9 @@ exports.updateRSVP = (req, res) => {
   UserProfileDB.updateUserRsvp(req.session.theUser, connection, req.query.rsvp);
   res.redirect('/',200, {user: req.session.theUser});
 }
+
+exports.removeUserConnection = (req, res) => {
+  var connection = connectionDB.getConnection(req.query.connectionID);
+  UserProfileDB.removeUserConnection(req.session.theUser, connection)
+  res.redirect('/',200, {user: req.session.theUser});
+}
