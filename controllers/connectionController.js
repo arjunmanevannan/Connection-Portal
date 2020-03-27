@@ -3,7 +3,7 @@ const Connection = require('./../models/Connection.js')
 const UserProfileDB = require('./../utils/UserProfileDB.js')
 
 
-exports.renderSavedConnections = (req,res) => {
+exports.renderSavedConnections = (req,res) => { //renders all the saved connections from the "DB"
   var connections = req.session.theUser._userConnection;
   const uniqueConnections = Array.from(new Set(connections.map(c => c._connection._connectionID)))
   .map(id => {
@@ -19,7 +19,7 @@ exports.renderConnections = (req, res) => {
   res.render('connections', {obj:connections, user:req.session.theUser});
 }
 
-exports.renderNewConnection = (req, res) => {
+exports.renderNewConnection = (req, res) => { //used for rendering new connections
   if(req.session.theUser == null){
     res.render('login', {user:req.session.theUser});
   }
@@ -28,7 +28,7 @@ exports.renderNewConnection = (req, res) => {
   }
 }
 
-exports.renderConnection = (req, res) => {
+exports.renderConnection = (req, res) => { //rendering a new connection. The method checks the connection ID for a valid connection and returs it.
   if(typeof req.query.connectionID === 'undefined'){
     console.log("No connection ID given. Redirecting to connections");
     var connections = connectionDB.getConnections();
@@ -48,32 +48,32 @@ exports.renderConnection = (req, res) => {
   }
 }
 
-exports.postRenderNewConnection = (req, res) => {
+exports.postRenderNewConnection = (req, res) => { //used to render new connection
   var newConnection = new Connection(req.body.connection.topic+Math.random(), req.body.connection.name, req.session.theUser._user, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
   connectionDB.addConnection(newConnection);
   var connections = connectionDB.getConnections();
   res.render('connections', {obj:connections, user:req.session.theUser});
 }
 
-exports.interestedConnection = (req, res) => {
+exports.interestedConnection = (req, res) => { //adds the connection to user profile.
   var connection = connectionDB.getConnection(req.query.connectionID);
   UserProfileDB.addUserConnection(req.session.theUser, connection, "Yes");
   res.redirect('/savedConnections',200, {user: req.session.theUser});
 }
 
-exports.updateRSVP = (req, res) => {
+exports.updateRSVP = (req, res) => { //updates the rsvp status for added connections
   var connection = connectionDB.getConnection(req.query.connectionID);
   UserProfileDB.updateUserRsvp(req.session.theUser, connection, req.query.rsvp);
   res.redirect('/savedConnections',200, {user: req.session.theUser});
 }
 
-exports.removeUserConnection = (req, res) => {
+exports.removeUserConnection = (req, res) => { // helps the user remove the connection from his dashboard.
   var connection = connectionDB.getConnection(req.query.connectionID);
   UserProfileDB.removeUserConnection(req.session.theUser, connection)
   res.redirect('/savedConnections',200, {user: req.session.theUser});
 }
 
-exports.deleteConnection = (req, res) => {
+exports.deleteConnection = (req, res) => { // allows the owner to delete the connection from the website.
   var id = req.query.connectionID;
   connectionDB.deleteConnection(id);
   res.redirect('/savedConnections', 200, {user:req.session.theUser});

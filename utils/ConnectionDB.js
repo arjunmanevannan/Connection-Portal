@@ -1,7 +1,7 @@
 const Connection = require('./../models/Connection.js')
 const UserDB = require('./UserDB.js');
 
-var users = UserDB.getUsers();
+var users = UserDB.getUsers(); // gets all the users to be passed as an argument for the connection constructor.
 
 var con1 = new Connection('1111','Gestures',users[0],'Android','Test', '12-07-2019', '04:12');
 var con2 = new Connection('1112','New in Android 10!',users[0],'Android','Test', '12-07-2019', '05:12');
