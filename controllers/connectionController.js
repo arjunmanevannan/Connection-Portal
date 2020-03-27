@@ -3,25 +3,14 @@ const Connection = require('./../models/Connection.js')
 const UserProfileDB = require('./../utils/UserProfileDB.js')
 
 
-// const addresses = [...]; // Some array I got from async call
-//
-// const uniqueAddresses = Array.from(new Set(addresses.map(a => a.id)))
-//  .map(id => {
-//    return addresses.find(a => a.id === id)
-//  })
-
-
 exports.renderSavedConnections = (req,res) => {
 
   var connections = req.session.theUser._userConnection;
-
   const uniqueConnections = Array.from(new Set(connections.map(c => c._connection._connectionID)))
   .map(id => {
     return connections.find(c => c._connection._connectionID === id)
   })
-  console.log(connections.length);
 
-  console.log(uniqueConnections.length);
   req.session.theUser._userConnection = uniqueConnections;
   res.render('savedConnections', {user:req.session.theUser});
 }
@@ -70,17 +59,17 @@ exports.postRenderNewConnection = (req, res) => {
 exports.interestedConnection = (req, res) => {
   var connection = connectionDB.getConnection(req.query.connectionID);
   UserProfileDB.addUserConnection(req.session.theUser, connection, "Yes");
-  res.redirect('/',200, {user: req.session.theUser});
+  res.redirect('/savedConnections',200, {user: req.session.theUser});
 }
 
 exports.updateRSVP = (req, res) => {
   var connection = connectionDB.getConnection(req.query.connectionID);
   UserProfileDB.updateUserRsvp(req.session.theUser, connection, req.query.rsvp);
-  res.redirect('/',200, {user: req.session.theUser});
+  res.redirect('/savedConnections',200, {user: req.session.theUser});
 }
 
 exports.removeUserConnection = (req, res) => {
   var connection = connectionDB.getConnection(req.query.connectionID);
   UserProfileDB.removeUserConnection(req.session.theUser, connection)
-  res.redirect('/',200, {user: req.session.theUser});
+  res.redirect('/savedConnections',200, {user: req.session.theUser});
 }
