@@ -3,10 +3,45 @@ const userConnection = require('./../models/UserConnection.js')
 const userProfile = require('./../models/UserProfile.js')
 const connection = require('./../models/Connection.js')
 
-const initUserProfile = function (user){ //initializes the user profile. The object is intantiated here and added to session.
+
+const UserProfile_Mongo = require('./../models/userProfile.model.js');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/TechMasters');
+let conn = mongoose.connection;
+
+// conn.once('open', function(){
+//   console.log('Connected to MDB');
+//   conn.db.collection("userProfiles", function(err, collection){
+//     collection.find({}).toArray(function(err, data){
+//       console.log(data);
+//     })
+//   });
+// });
+
+const initUserProfile = function(user){ //initializes the user profile. The object is intantiated here and added to session.
   var uc = [];
   var up1 = new userProfile(user, uc);
   return up1;
+}
+
+// const initUserProfileM = function(user){
+//   var up1 = new UserProfile_Mongo();
+//   up1.user = user;
+//   conn.db.collection("userProfiles").insert(up1);
+// }
+
+
+const getUserProfileM = async function(userEmail){
+  var loggedInUserProfile = "";
+  await UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
+    if(err){
+      console.log(err);
+    }
+    else{
+      loggedInUserProfile = userProfileObj;
+    }
+  });
+  return loggedInUserProfile;
 }
 
 const addUserConnection = function (up1, connection, rsvp){ //used to add a new user connection
@@ -42,3 +77,5 @@ module.exports.initUserProfile = initUserProfile;
 module.exports.addUserConnection = addUserConnection;
 module.exports.removeUserConnection = removeUserConnection;
 module.exports.updateUserRsvp = updateUserRsvp;
+// module.exports.initUserProfileM = initUserProfileM;
+module.exports.getUserProfileM = getUserProfileM;

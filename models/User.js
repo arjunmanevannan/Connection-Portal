@@ -58,9 +58,7 @@ class User {
     get userID() {
       return this._userID;
     }
-
-
-
+    
     get firstName(){
       return this._firstName;
     }

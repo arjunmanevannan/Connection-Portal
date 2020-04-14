@@ -1,4 +1,3 @@
-var up1 = require('./../utils/UserProfileDB.js')
 var userDB = require('./../utils/UserDB.js')
 var userProfileDB = require('./../utils/UserProfileDB.js')
 
@@ -6,12 +5,15 @@ exports.renderLoginPage = (req,res) => {
   res.render('login');
 }
 
-exports.postRenderLoginPage = (req, res) => {
+exports.postRenderLoginPage = async (req, res) => {
     var user_email = req.body.user.email;
-    var usr = userDB.getUser(user_email);
-    var up1 = userProfileDB.initUserProfile(usr);
-    req.session.theUser = up1;
-    res.render('savedConnections', {user: req.session.theUser});
+    // var usr = await userDB.getUserM(user_email);
+    // var usr = userDB.getUser(user_email);
+    // userProfileDB.initUserProfileM(usr);
+    // req.session.theUser = up1;
+    var up = await userProfileDB.getUserProfileM(user_email);
+    console.log(up);
+    res.render('savedConnections', {user: up});
 }
 
 exports.renderLogoutPage = (req,res) => {
