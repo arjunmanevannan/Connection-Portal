@@ -5,9 +5,6 @@ var userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  userID:{
-    type: String
-  },
   firstName:{
     type: String,
     required: true
