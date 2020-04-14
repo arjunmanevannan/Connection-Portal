@@ -1,6 +1,12 @@
 const Connection = require('./../models/Connection.js')
 const UserDB = require('./UserDB.js');
 
+const Connection_Mongo = require('./../models/connection.model.js');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/TechMasters');
+let conn = mongoose.connection;
+
+
 var users = UserDB.getUsers(); // gets all the users to be passed as an argument for the connection constructor.
 
 var con1 = new Connection('1111','Gestures',users[0],'Android','Test', '12-07-2019', '04:12');
@@ -21,8 +27,29 @@ const setConnections = function(newConnections){
   connections = newConnections;
 }
 const addConnection = function(connection){
+  console.log(connection);
   connections.push(connection);
 }
+
+// const addConnectionM = function(connection){
+//   var newConnection = new Connection_Mongo();
+//   newConnection.name = l;
+//   newConnection.host = l;
+//   newConnection.topic = l;
+//   newConnection.details = l;
+//   newConnection.date = l;
+//   newConnection.time = l;
+//
+// }
+
+
+
+
+// const initUserProfileM = function(user){
+//   var up1 = new UserProfile_Mongo();
+//   up1.user = user;
+//   conn.db.collection("userProfiles").insert(up1);
+// }
 
 const getConnection = function (givenConnectionID){
   for(var i=0;i<connections.length;i++){

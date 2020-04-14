@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 
 var connectionSchema = new mongoose.Schema({
-  connectionID:{
-    type: String
-  },
   name:{
     type: String
   },
   host:{
-    type: String
+    type: Object,
+    required: true
   },
   topic:{
     type: String
@@ -24,4 +22,4 @@ var connectionSchema = new mongoose.Schema({
   }
 })
 
-mongoose.model('Connection', connectionSchema);
+module.exports = mongoose.model('connection', connectionSchema);

@@ -7,13 +7,15 @@ exports.renderLoginPage = (req,res) => {
 
 exports.postRenderLoginPage = async (req, res) => {
     var user_email = req.body.user.email;
-    // var usr = await userDB.getUserM(user_email);
-    // var usr = userDB.getUser(user_email);
-    // userProfileDB.initUserProfileM(usr);
-    // req.session.theUser = up1;
-    var up = await userProfileDB.getUserProfileM(user_email);
-    console.log(up);
-    res.render('savedConnections', {user: up});
+    var usr = await userDB.getUserM(user_email);
+    if(!usr){
+      res.render('login');
+    }
+    else{
+      var up1 = await userProfileDB.getUserProfileM(user_email);
+      req.session.theUser = up1;
+      res.render('savedConnections', {user: req.session.theUser});
+    }
 }
 
 exports.renderLogoutPage = (req,res) => {
