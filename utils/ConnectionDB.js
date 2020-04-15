@@ -23,22 +23,20 @@ var connections = [con1,con2,con3,con4,con5,con6,con7,con8];
 const getConnections = function(){
   return connections;
 }
+
 const getConnectionsM = function(){
   var connectionsList;
-  Connection_Mongo.find({}, function(err, result){
-    if(err){
-      console.log("Error while retrieving connection objects: "+err);
-    }
-    else{
-      connectionsList = result;
-    }
+  Connection_Mongo.find({}).toArray(function(err, result){
+    console.log(result);
   })
   console.log("OOPS "+connectionsList);
   return connectionsList;
 }
+
 const setConnections = function(newConnections){
   connections = newConnections;
 }
+
 const addConnection = function(connection){
   console.log(connection);
   connections.push(connection);

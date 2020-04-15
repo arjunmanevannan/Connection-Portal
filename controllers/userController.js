@@ -6,17 +6,19 @@ exports.renderLoginPage = (req,res) => {
 }
 
 exports.postRenderLoginPage = async (req, res) => {
-    var user_email = req.body.user.email;
-    var usr = await userDB.getUserM(user_email);
-    if(!usr){
-      res.render('login');
-    }
-    else{
-      var up1 = await userProfileDB.getUserProfileM(user_email);
-      console.log("2nd");
-      req.session.theUser = up1;
-      res.render('savedConnections', {user: req.session.theUser});
-    }
+  var user_email = req.body.user.email;
+  var usr = await userDB.getUserM(user_email);
+  if(!usr){
+    res.render('login');
+    return;
+  }
+
+  req.session.theUser = await userProfileDB.getUserProfileM(user_email);
+
+  // req.session.theUser = up1;
+
+  console.log("This is why I failed: "+req.session.theUser);
+  res.render('savedConnections', {user: req.session.theUser});
 }
 
 exports.renderLogoutPage = (req,res) => {

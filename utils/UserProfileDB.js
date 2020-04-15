@@ -29,11 +29,9 @@ const getUserProfileM = async function(userEmail){
       console.log(err);
     }
     else{
-      console.log("I got this from DB: "+userProfileObj);
       loggedInUserProfile = userProfileObj;
     }
   });
-  console.log("1st");
   return loggedInUserProfile;
 }
 
