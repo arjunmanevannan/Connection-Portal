@@ -22,17 +22,18 @@ const initUserProfile = function(user){ //initializes the user profile. The obje
 // }
 
 
-const getUserProfileM = async function(userEmail){
+const getUserProfileM = function(userEmail, req, res, callback){
   var loggedInUserProfile = "";
-  await UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
+  UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
     if(err){
       console.log(err);
     }
     else{
-      loggedInUserProfile = userProfileObj;
+      req.session.theUser = userProfileObj;
+      // loggedInUserProfile = userProfileObj;
+      callback();
     }
   });
-  return loggedInUserProfile;
 }
 
 const addUserConnection = function (up1, connection, rsvp){ //used to add a new user connection

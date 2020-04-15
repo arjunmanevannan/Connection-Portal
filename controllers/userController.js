@@ -13,12 +13,11 @@ exports.postRenderLoginPage = async (req, res) => {
     return;
   }
 
-  req.session.theUser = await userProfileDB.getUserProfileM(user_email);
+  userProfileDB.getUserProfileM(user_email, req, res, function(){
+    console.log("This is why I failed: "+req.session.theUser);
+    res.render('savedConnections', {user: req.session.theUser});
+  })
 
-  // req.session.theUser = up1;
-
-  console.log("This is why I failed: "+req.session.theUser);
-  res.render('savedConnections', {user: req.session.theUser});
 }
 
 exports.renderLogoutPage = (req,res) => {
