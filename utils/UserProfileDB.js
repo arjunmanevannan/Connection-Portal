@@ -9,15 +9,6 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/TechMasters');
 let conn = mongoose.connection;
 
-// conn.once('open', function(){
-//   console.log('Connected to MDB');
-//   conn.db.collection("userProfiles", function(err, collection){
-//     collection.find({}).toArray(function(err, data){
-//       console.log(data);
-//     })
-//   });
-// });
-
 const initUserProfile = function(user){ //initializes the user profile. The object is intantiated here and added to session.
   var uc = [];
   var up1 = new userProfile(user, uc);
@@ -38,9 +29,11 @@ const getUserProfileM = async function(userEmail){
       console.log(err);
     }
     else{
+      console.log("I got this from DB: "+userProfileObj);
       loggedInUserProfile = userProfileObj;
     }
   });
+  console.log("1st");
   return loggedInUserProfile;
 }
 

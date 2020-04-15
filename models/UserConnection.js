@@ -1,21 +1,21 @@
 class UserConnection {
     constructor(connection, rsvp){
-      this._connection = connection;
-      this._rsvp = rsvp;
+      this.connection = connection;
+      this.rsvp = rsvp;
     }
 
     get connection() {
-      return this._connection;
+      return this.connection;
     }
     set connection(newConnection){
-      this._connection = newConnection;
+      this.connection = newConnection;
     }
 
     get rsvp(){
-      return this._rsvp;
+      return this.rsvp;
     }
     set rsvp(newRsvp) {
-      this._rsvp = newRsvp;
+      this.rsvp = newRsvp;
     }
 }
 

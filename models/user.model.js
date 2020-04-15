@@ -35,6 +35,8 @@ var userSchema = new mongoose.Schema({
   country:{
     type: String
   }
+},{
+  versionKey: false
 })
 
 module.exports = mongoose.model('user', userSchema);

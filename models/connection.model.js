@@ -20,6 +20,8 @@ var connectionSchema = new mongoose.Schema({
   time:{
     type: String
   }
+},{
+  versionKey: false
 })
 
 module.exports = mongoose.model('connection', connectionSchema);

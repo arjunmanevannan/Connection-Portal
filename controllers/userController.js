@@ -13,6 +13,7 @@ exports.postRenderLoginPage = async (req, res) => {
     }
     else{
       var up1 = await userProfileDB.getUserProfileM(user_email);
+      console.log("2nd");
       req.session.theUser = up1;
       res.render('savedConnections', {user: req.session.theUser});
     }

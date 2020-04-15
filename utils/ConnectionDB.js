@@ -9,19 +9,32 @@ let conn = mongoose.connection;
 
 var users = UserDB.getUsers(); // gets all the users to be passed as an argument for the connection constructor.
 
-var con1 = new Connection('1111','Gestures',users[0],'Android','Test', '12-07-2019', '04:12');
-var con2 = new Connection('1112','New in Android 10!',users[0],'Android','Test', '12-07-2019', '05:12');
-var con3 = new Connection('1113','Collections',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
-var con4 = new Connection('1114','New in Java 12',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
-var con5 = new Connection('1115','Advanced',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
-var con6 = new Connection('1116','Resume Building',users[0],'Career', 'Test', '12-07-2019', '06:12');
-var con7 = new Connection('1117','How to tackle the Phone/Skype Interview!',users[0],'Career','Test', '12-07-2019', '06:12');
-var con8 = new Connection('1118','Importance of Grooming',users[0],'Career','Test', '12-07-2019', '06:12');
+var con1 = new Connection('Gestures',users[0],'Android','Test', '12-07-2019', '04:12');
+var con2 = new Connection('New in Android 10!',users[0],'Android','Test', '12-07-2019', '05:12');
+var con3 = new Connection('Collections',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
+var con4 = new Connection('New in Java 12',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
+var con5 = new Connection('Advanced',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
+var con6 = new Connection('Resume Building',users[0],'Career', 'Test', '12-07-2019', '06:12');
+var con7 = new Connection('How to tackle the Phone/Skype Interview!',users[0],'Career','Test', '12-07-2019', '06:12');
+var con8 = new Connection('Importance of Grooming',users[0],'Career','Test', '12-07-2019', '06:12');
 
 var connections = [con1,con2,con3,con4,con5,con6,con7,con8];
 
 const getConnections = function(){
   return connections;
+}
+const getConnectionsM = function(){
+  var connectionsList;
+  Connection_Mongo.find({}, function(err, result){
+    if(err){
+      console.log("Error while retrieving connection objects: "+err);
+    }
+    else{
+      connectionsList = result;
+    }
+  })
+  console.log("OOPS "+connectionsList);
+  return connectionsList;
 }
 const setConnections = function(newConnections){
   connections = newConnections;
@@ -31,25 +44,14 @@ const addConnection = function(connection){
   connections.push(connection);
 }
 
-// const addConnectionM = function(connection){
-//   var newConnection = new Connection_Mongo();
-//   newConnection.name = l;
-//   newConnection.host = l;
-//   newConnection.topic = l;
-//   newConnection.details = l;
-//   newConnection.date = l;
-//   newConnection.time = l;
-//
-// }
-
-
-
-
-// const initUserProfileM = function(user){
-//   var up1 = new UserProfile_Mongo();
-//   up1.user = user;
-//   conn.db.collection("userProfiles").insert(up1);
-// }
+const addConnectionM = function(connection){
+  var connectionObj = new Connection_Mongo(connection);
+  connectionObj.save(function(err){
+    if(err){
+      console.log("Error while creating new user: "+err);
+    }
+  });
+}
 
 const getConnection = function (givenConnectionID){
   for(var i=0;i<connections.length;i++){
@@ -77,5 +79,7 @@ const deleteConnection = function(id) {
 
 module.exports.addConnection = addConnection;
 module.exports.getConnection = getConnection;
+module.exports.getConnectionsM = getConnectionsM;
 module.exports.getConnections = getConnections;
 module.exports.deleteConnection = deleteConnection;
+module.exports.addConnectionM = addConnectionM;

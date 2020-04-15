@@ -19,6 +19,31 @@ const addUser = function(user){
   users.push(user);
 }
 
+const addUserM = function(user){
+  User_Mongo.findOne({emailAddress: user.emailAddress}, function(err, userObj){
+    if(err){
+      console.log(err);
+    }
+    else if(userObj){
+      console.log("Object exists. Can't create a user");
+    }
+    else{
+      var userObj = new User_Mongo(user);
+      userObj.save(function(err){
+        if(err){
+          console.log("Error while creating new user: "+err);
+        }
+      });
+    }
+  })
+}
+
+// const initUserProfileM = function(user){
+//   var up1 = new UserProfile_Mongo();
+//   up1.user = user;
+//   conn.db.collection("userProfiles").insert(up1);
+// }
+
 const getUser = function(userEmail){
   var users = getUsers();
   for(var i=0; i<users.length; i++){
@@ -29,20 +54,6 @@ const getUser = function(userEmail){
   }
   return loggedInUser;
 }
-
-// const getUserM = function(userEmail){
-//   var loggedInUser = "";
-//    connection.db.collection("users", function(err, collection){
-//       collection.findOne({emailAddress: userEmail}, function(err, result) {
-//       if(!err){
-//         console.log("Returning");
-//         return result;
-//       }
-//     });
-//   });
-//   return loggedInUser;
-// }
-
 
 const getUserM = async function(userEmail){
   var loggedInUser = "";
@@ -59,4 +70,5 @@ const getUserM = async function(userEmail){
 module.exports.getUsers = getUsers;
 module.exports.getUser = getUser;
 module.exports.addUser = addUser;
+module.exports.addUserM = addUserM;
 module.exports.getUserM = getUserM;

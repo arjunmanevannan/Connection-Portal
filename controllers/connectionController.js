@@ -20,12 +20,20 @@ exports.renderConnections = (req, res) => {
 }
 
 exports.renderNewConnection = (req, res) => { //used for rendering new connections
+  console.log(req.session.theUser);
   if(req.session.theUser == null){
     res.render('login', {user:req.session.theUser});
   }
   else{
     res.render('newConnection', {user: req.session.theUser});
   }
+}
+
+exports.postRenderNewConnection = (req, res) => { //used to render new connection
+  // var newConnection = new Connection(req.body.connection.name, req.session.theUser.user, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
+  // connectionDB.addConnectionM(newConnection);
+  var connections = connectionDB.getConnectionsM();
+  // res.render('connections', {obj:connections, user:req.session.theUser});
 }
 
 exports.renderConnection = (req, res) => { //rendering a new connection. The method checks the connection ID for a valid connection and returs it.
@@ -46,13 +54,6 @@ exports.renderConnection = (req, res) => { //rendering a new connection. The met
       res.render('connections', {obj:connections, user:req.session.theUser});
     }
   }
-}
-
-exports.postRenderNewConnection = (req, res) => { //used to render new connection
-  var newConnection = new Connection(req.body.connection.topic+Math.random(), req.body.connection.name, req.session.theUser._user, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
-  connectionDB.addConnection(newConnection);
-  var connections = connectionDB.getConnections();
-  res.render('connections', {obj:connections, user:req.session.theUser});
 }
 
 exports.interestedConnection = (req, res) => { //adds the connection to user profile.

@@ -1,21 +1,21 @@
 class UserProfile {
     constructor(user, userConnection){
-      this._user = user;
-      this._userConnection = userConnection;
+      this.user = user;
+      this.userConnection = userConnection;
     }
 
     get user() {
-      return this._user;
+      return this.user;
     }
     set user(newUser) {
-      this._user = newUser;
+      this.user = newUser;
     }
 
     get userConnection(){
-      return this._userConnection;
+      return this.userConnection;
     }
     set userConnection(newUserConnection) {
-      this._userConnection = newUserConnection;
+      this.userConnection = newUserConnection;
     }
 }
 
