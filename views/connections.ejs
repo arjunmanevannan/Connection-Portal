@@ -21,7 +21,7 @@
 
 		<% var topicCount = [ ]; %>
 		<% for (var i=0; i<obj.length; i++) { %>
-			<% topicCount.push(obj[i]._topic);%>
+			<% topicCount.push(obj[i].topic);%>
 		<% } %>
 		<% var uniqueTopics = Array.from(new Set(topicCount)) %>
 

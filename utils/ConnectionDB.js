@@ -24,13 +24,11 @@ const getConnections = function(){
   return connections;
 }
 
-const getConnectionsM = function(){
-  var connectionsList;
-  Connection_Mongo.find({}).toArray(function(err, result){
-    console.log(result);
-  })
-  console.log("OOPS "+connectionsList);
-  return connectionsList;
+const getConnectionsM = function(callback){
+  Connection_Mongo.find({}, function(err, result){
+    connectionsList = result;
+    callback(result);
+  });
 }
 
 const setConnections = function(newConnections){
@@ -42,12 +40,14 @@ const addConnection = function(connection){
   connections.push(connection);
 }
 
-const addConnectionM = function(connection){
+const addConnectionM = function(connection, callback){
   var connectionObj = new Connection_Mongo(connection);
   connectionObj.save(function(err){
     if(err){
       console.log("Error while creating new user: "+err);
+      return;
     }
+    callback();
   });
 }
 

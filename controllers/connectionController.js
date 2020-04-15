@@ -30,10 +30,18 @@ exports.renderNewConnection = (req, res) => { //used for rendering new connectio
 }
 
 exports.postRenderNewConnection = (req, res) => { //used to render new connection
-  // var newConnection = new Connection(req.body.connection.name, req.session.theUser.user, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
+  //
   // connectionDB.addConnectionM(newConnection);
-  var connections = connectionDB.getConnectionsM();
-  // res.render('connections', {obj:connections, user:req.session.theUser});
+  // connectionDB.getConnectionsM(function(connections){
+  //   res.render('connections', {obj:connections, user:req.session.theUser});
+  // })
+
+  var newConnection = new Connection(req.body.connection.name, req.session.theUser.user, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
+  connectionDB.addConnectionM(newConnection, function(){
+    connectionDB.getConnectionsM(function(connections){
+      res.render('connections', {obj:connections, user:req.session.theUser});
+    })
+  })
 }
 
 exports.renderConnection = (req, res) => { //rendering a new connection. The method checks the connection ID for a valid connection and returs it.
