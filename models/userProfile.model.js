@@ -9,6 +9,10 @@ var userProfileSchema = new mongoose.Schema({
     type: Array,
     default: []
   }
+},{
+  versionKey: false
 })
+
+
 
 module.exports = mongoose.model('userprofile', userProfileSchema);

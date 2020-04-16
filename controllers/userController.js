@@ -9,6 +9,7 @@ exports.postRenderLoginPage = async (req, res) => {
   var user_email = req.body.user.email;
   var usr = await userDB.getUserM(user_email);
   if(!usr){
+    console.log("No user found in the DB. Please sign up");
     res.render('login');
     return;
   }

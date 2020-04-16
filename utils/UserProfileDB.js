@@ -9,11 +9,11 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/TechMasters');
 let conn = mongoose.connection;
 
-const initUserProfile = function(user){ //initializes the user profile. The object is intantiated here and added to session.
-  var uc = [];
-  var up1 = new userProfile(user, uc);
-  return up1;
-}
+// const initUserProfile = function(user){ //initializes the user profile. The object is intantiated here and added to session.
+//   var uc = [];
+//   var up1 = new userProfile(user, uc);
+//   return up1;
+// }
 
 const getUserProfileM = function(userEmail, callback){
   UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
@@ -66,7 +66,7 @@ const removeUserConnection = function (up1, connection){ //used for deletion, wh
 }
 
 
-module.exports.initUserProfile = initUserProfile;
+
 module.exports.addUserConnection = addUserConnection;
 // module.exports.addUserConnectionM = addUserConnectionM;
 module.exports.removeUserConnection = removeUserConnection;

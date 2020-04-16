@@ -1,5 +1,7 @@
 const user = require('./../models/User.js')
+const userProfile = require('./../models/UserProfile.js')
 const User_Mongo = require('./../models/user.model.js');
+const UserProfile_Mongo = require('./../models/userProfile.model.js');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/TechMasters');
 let conn = mongoose.connection;
@@ -19,7 +21,7 @@ const addUser = function(user){
   users.push(user);
 }
 
-const addUserM = function(user){
+const addUserM = function(user, callback){
   User_Mongo.findOne({emailAddress: user.emailAddress}, function(err, userObj){
     if(err){
       console.log(err);
@@ -32,18 +34,23 @@ const addUserM = function(user){
       userObj.save(function(err){
         if(err){
           console.log("Error while creating new user: "+err);
+          return;
         }
+        callback(userObj);
       });
     }
   })
 }
 
-// const initUserProfileM = function(user){
-//   var up1 = new UserProfile_Mongo();
-//   up1.user = user;
-//   conn.db.collection("userProfiles").insert(up1);
-// }
-
+const initUserProfileM = function(userObj){
+  var userConnectionObj = [];
+  var up1 = new UserProfile_Mongo(new userProfile(userObj, userConnectionObj));
+  up1.save(function(err){
+    if(err){
+      console.log("Error saving user profile for the user "+user.firstName+" :"+err);
+    }
+  })
+}
 
 const getUserM = async function(userEmail){
   var loggedInUser = "";
@@ -57,6 +64,7 @@ const getUserM = async function(userEmail){
   return loggedInUser;
 }
 
+module.exports.initUserProfileM = initUserProfileM;
 module.exports.getUsers = getUsers;
 module.exports.addUser = addUser;
 module.exports.addUserM = addUserM;
