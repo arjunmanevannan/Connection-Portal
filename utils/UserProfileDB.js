@@ -3,7 +3,7 @@ const userConnection = require('./../models/UserConnection.js')
 const userProfile = require('./../models/UserProfile.js')
 const connection = require('./../models/Connection.js')
 
-
+const UserConnection_Mongo = require('./../models/userConnection.model.js')
 const UserProfile_Mongo = require('./../models/userProfile.model.js');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/TechMasters');
@@ -15,31 +15,32 @@ const initUserProfile = function(user){ //initializes the user profile. The obje
   return up1;
 }
 
-// const initUserProfileM = function(user){
-//   var up1 = new UserProfile_Mongo();
-//   up1.user = user;
-//   conn.db.collection("userProfiles").insert(up1);
-// }
-
-
-const getUserProfileM = function(userEmail, req, res, callback){
-  var loggedInUserProfile = "";
+const getUserProfileM = function(userEmail, callback){
   UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
     if(err){
       console.log(err);
     }
     else{
-      req.session.theUser = userProfileObj;
-      // loggedInUserProfile = userProfileObj;
-      callback();
+      callback(userProfileObj);
     }
   });
 }
 
 const addUserConnection = function (up1, connection, rsvp){ //used to add a new user connection
-  up1._userConnection.push(new userConnection(connection, rsvp));
+  up1.userConnection.push(new userConnection(connection, rsvp));
   return up1;
 }
+
+// const addUserConnectionM = function(connection, rsvp, callback){
+//   var userConnectionObj = new UserConnection_Mongo(new userConnection(connection, rsvp));
+//   userConnectionObj.save(function(err){
+//     if(err){
+//       console.log("Error while saving user connection: "+err);
+//       return;
+//     }
+//     callback();
+//   });
+// }
 
 const updateUserRsvp = function (up1, connection, rsvp){//updates the rsvp status
   for(i=0; i<up1._userConnection.length;i++){
@@ -67,6 +68,7 @@ const removeUserConnection = function (up1, connection){ //used for deletion, wh
 
 module.exports.initUserProfile = initUserProfile;
 module.exports.addUserConnection = addUserConnection;
+// module.exports.addUserConnectionM = addUserConnectionM;
 module.exports.removeUserConnection = removeUserConnection;
 module.exports.updateUserRsvp = updateUserRsvp;
 // module.exports.initUserProfileM = initUserProfileM;

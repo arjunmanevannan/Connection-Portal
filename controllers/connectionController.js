@@ -67,6 +67,16 @@ exports.interestedConnection = (req, res) => { //adds the connection to user pro
   res.redirect('/savedConnections',200, {user: req.session.theUser});
 }
 
+exports.interestedConnection = (req, res) => {
+  connectionDB.getConnectionM(req.query.connectionID, function(connection){
+    if(connection!==null){
+      console.log("We have a connection");
+      var test = UserProfileDB.addUserConnection(req.session.theUser, connection, "Yes");
+      console.log(test);
+    }
+  })
+}
+
 exports.updateRSVP = (req, res) => { //updates the rsvp status for added connections
   var connection = connectionDB.getConnection(req.query.connectionID);
   UserProfileDB.updateUserRsvp(req.session.theUser, connection, req.query.rsvp);

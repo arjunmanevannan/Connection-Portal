@@ -20,5 +20,6 @@ exports.renderNewUserPage = (req,res) => {
 exports.renderPostNewUserPage = (req, res) => {
   var newUser = new User(req.body.user.firstName, req.body.user.lastName, req.body.user.emailAddress, req.body.user.addressLine1, req.body.user.addressLine2, req.body.user.city, req.body.user.state, req.body.user.zip, req.body.user.country);
   UserDB.addUserM(newUser);
+  UserDB.initUserProfileM();
   res.redirect('/', 200, {user: req.session.theUser});
 }

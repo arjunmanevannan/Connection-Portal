@@ -13,8 +13,9 @@ exports.postRenderLoginPage = async (req, res) => {
     return;
   }
 
-  userProfileDB.getUserProfileM(user_email, req, res, function(){
-    // console.log("This is why I failed: "+req.session.theUser);
+  userProfileDB.getUserProfileM(user_email, function(userProfileObj){
+    console.log("This is why I failed: "+userProfileObj);
+    req.session.theUser = userProfileObj;
     res.render('savedConnections', {user: req.session.theUser});
   })
 }

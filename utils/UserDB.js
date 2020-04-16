@@ -44,16 +44,6 @@ const addUserM = function(user){
 //   conn.db.collection("userProfiles").insert(up1);
 // }
 
-const getUser = function(userEmail){
-  var users = getUsers();
-  for(var i=0; i<users.length; i++){
-    if(users[i]._emailAddress == userEmail){
-      var loggedInUser = users[i];
-      console.log("Logged In. "+ loggedInUser._firstName);
-    }
-  }
-  return loggedInUser;
-}
 
 const getUserM = async function(userEmail){
   var loggedInUser = "";
@@ -68,7 +58,6 @@ const getUserM = async function(userEmail){
 }
 
 module.exports.getUsers = getUsers;
-module.exports.getUser = getUser;
 module.exports.addUser = addUser;
 module.exports.addUserM = addUserM;
 module.exports.getUserM = getUserM;
