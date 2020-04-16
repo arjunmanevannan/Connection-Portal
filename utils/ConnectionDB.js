@@ -20,10 +20,6 @@ var con8 = new Connection('Importance of Grooming',users[0],'Career','Test', '12
 
 var connections = [con1,con2,con3,con4,con5,con6,con7,con8];
 
-const getConnections = function(){
-  return connections;
-}
-
 const getConnectionsM = function(callback){
   Connection_Mongo.find({}, function(err, result){
     connectionsList = result;
@@ -33,11 +29,6 @@ const getConnectionsM = function(callback){
 
 const setConnections = function(newConnections){
   connections = newConnections;
-}
-
-const addConnection = function(connection){
-  console.log(connection);
-  connections.push(connection);
 }
 
 const addConnectionM = function(connection, callback){
@@ -51,33 +42,24 @@ const addConnectionM = function(connection, callback){
   });
 }
 
-const getConnection = function (givenConnectionID){
-  for(var i=0;i<connections.length;i++){
-    if(connections[i]._connectionID == givenConnectionID){
-      return connections[i];
-      break;
+const getConnectionM = function(connectionID, callback){
+  Connection_Mongo.findOne({_id:connectionID}, function(err, result){
+    console.log(result);
+    callback(result);
+  });
+}
+
+const deleteConnectionM = function(connectionID, callback){
+  Connection_Mongo.findOneAndRemove({_id:connectionID}, function(err){
+    if(err){
+      console.log("Error deleting the record: "+err);
     }
-  }
-  return null;
-}
-
-function _arrayRemove(arr, value) {
-	return arr.filter(function(ele){
-    console.log(ele._connectionID);
-		return ele._connectionID != value;
-	});
-}
-
-const deleteConnection = function(id) {
-  var connections = getConnections();
-  var newConnectionsList = _arrayRemove(connections, id);
-  setConnections(newConnectionsList);
+    callback();
+  })
 }
 
 
-module.exports.addConnection = addConnection;
-module.exports.getConnection = getConnection;
+module.exports.getConnectionM = getConnectionM;
 module.exports.getConnectionsM = getConnectionsM;
-module.exports.getConnections = getConnections;
-module.exports.deleteConnection = deleteConnection;
+module.exports.deleteConnectionM = deleteConnectionM;
 module.exports.addConnectionM = addConnectionM;

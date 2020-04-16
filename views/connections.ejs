@@ -31,7 +31,7 @@
 				<ul class = "catalog-links">
 					<% for (var j=0;j<obj.length; j++) { %>
 						<% if(obj[j].topic === uniqueTopics[i]){ %>
-						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[j].connectionID -%>"> <%= obj[j].name %> </a> </li>
+						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[j]._id -%>"> <%= obj[j].name %> </a> </li>
 						<% } %>
 					<% } %>
 				</ul>
