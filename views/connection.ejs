@@ -31,7 +31,7 @@
 		<%= obj.details %>
 		</section>
 
-		<% if((user==null) || (user.user.userID != obj.host._id)){ %>
+		<% if((user==null) || (user.user._id != obj.host._id)){ %>
 			<section class = "itemPoll">
 				<p id = "pollText"> Are you going? 3 people are going </p>
 				<BR>

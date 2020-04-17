@@ -1,18 +1,14 @@
-const mongoose = require('mongoose');
-
-var userProfileSchema = new mongoose.Schema({
-  user:{
-    type: Object,
-    required: true
-  },
-  userConnection:{
-    type: Array,
-    default: []
-  }
-},{
-  versionKey: false
-})
-
-
-
-module.exports = mongoose.model('userprofile', userProfileSchema);
+// const mongoose = require('mongoose');
+// const userConnectionSchema = require('./userConnection.model.js');
+// const userSchema = require('./user.model.js');
+//
+// var userProfileSchema = new mongoose.Schema({
+//   user:userSchema,
+//   userConnection:[userConnectionSchema]
+// },{
+//   versionKey: false
+// })
+//
+//
+//
+// module.exports = mongoose.model('userprofile', userProfileSchema);

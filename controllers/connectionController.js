@@ -3,7 +3,9 @@ const Connection = require('./../models/Connection.js')
 const UserProfileDB = require('./../utils/UserProfileDB.js')
 
 
+
 exports.renderSavedConnections = (req,res) => { //renders all the saved connections from the "DB"
+
   var connections = req.session.theUser.userConnection;
   const uniqueConnections = Array.from(new Set(connections.map(c => c.connection.connectionID)))
   .map(id => {
@@ -40,7 +42,8 @@ exports.postRenderNewConnection = (req, res) => { //used to render new connectio
 }
 
 exports.renderConnection = (req, res) => { //rendering a new connection. The method checks the connection ID for a valid connection and returs it.
-  console.log("The given connectionID: "+req.query.connectionID);
+  // console.log("The given connectionID: "+req.query.connectionID);
+  // console.log("The logged in user: "+req.session.theUser._id);
   if(typeof req.query.connectionID === 'undefined'){
     console.log("No connection ID given. Redirecting to connections");
     connectionDB.getConnectionsM(function(connections){
@@ -61,18 +64,17 @@ exports.renderConnection = (req, res) => { //rendering a new connection. The met
   }
 }
 
-exports.interestedConnection = (req, res) => { //adds the connection to user profile.
-  var connection = connectionDB.getConnection(req.query.connectionID);
-  UserProfileDB.addUserConnection(req.session.theUser, connection, "Yes");
-  res.redirect('/savedConnections',200, {user: req.session.theUser});
-}
+// exports.interestedConnection = (req, res) => { //adds the connection to user profile.
+//   var connection = connectionDB.getConnection(req.query.connectionID);
+//   UserProfileDB.addUserConnection(req.session.theUser, connection, "Yes");
+//   res.redirect('/savedConnections',200, {user: req.session.theUser});
+// }
 
 exports.interestedConnection = (req, res) => {
   connectionDB.getConnectionM(req.query.connectionID, function(connection){
     if(connection!==null){
       console.log("We have a connection");
-      var test = UserProfileDB.addUserConnection(req.session.theUser, connection, "Yes");
-      console.log(test);
+      UserProfileDB.addUserConnectionM(req.session.theUser, connection, "Yes");
     }
   })
 }

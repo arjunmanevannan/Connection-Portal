@@ -1,7 +1,8 @@
 const user = require('./../models/User.js')
 const userProfile = require('./../models/UserProfile.js')
-const User_Mongo = require('./../models/user.model.js');
-const UserProfile_Mongo = require('./../models/userProfile.model.js');
+const db = require('./../models/db.js');
+const User_Mongo = db.userModel;
+const UserProfile_Mongo = db.userprofileModel;
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/TechMasters');
 let conn = mongoose.connection;
@@ -13,13 +14,13 @@ var usr4 = new user('2114','Jack','Ma','jack@gmail.com');
 
 var users = [usr1, usr2, usr3, usr4];
 
-const getUsers = function(){
-  return users;
-}
-
-const addUser = function(user){
-  users.push(user);
-}
+// const getUsers = function(){
+//   return users;
+// }
+//
+// const addUser = function(user){
+//   users.push(user);
+// }
 
 const addUserM = function(user, callback){
   User_Mongo.findOne({emailAddress: user.emailAddress}, function(err, userObj){
@@ -65,7 +66,5 @@ const getUserM = async function(userEmail){
 }
 
 module.exports.initUserProfileM = initUserProfileM;
-module.exports.getUsers = getUsers;
-module.exports.addUser = addUser;
 module.exports.addUserM = addUserM;
 module.exports.getUserM = getUserM;

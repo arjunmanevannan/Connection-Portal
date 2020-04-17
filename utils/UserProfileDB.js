@@ -3,8 +3,11 @@ const userConnection = require('./../models/UserConnection.js')
 const userProfile = require('./../models/UserProfile.js')
 const connection = require('./../models/Connection.js')
 
-const UserConnection_Mongo = require('./../models/userConnection.model.js')
-const UserProfile_Mongo = require('./../models/userProfile.model.js');
+const db = require('./../models/db.js');
+const User_Mongo = db.userModel;
+const UserProfile_Mongo = db.userprofileModel;
+const UserConnection_Mongo = db.userconnectionModel;
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/TechMasters');
 let conn = mongoose.connection;
@@ -26,21 +29,40 @@ const getUserProfileM = function(userEmail, callback){
   });
 }
 
-const addUserConnection = function (up1, connection, rsvp){ //used to add a new user connection
-  up1.userConnection.push(new userConnection(connection, rsvp));
-  return up1;
+// const addUserConnection = function (up1, connection, rsvp){ //used to add a new user connection
+//   up1.userConnection.push(new userConnection(connection, rsvp));
+//   return up1;
+// }
+
+const addUserConnectionM = function(up1, connection, rsvp){
+  // console.log(connection);
+  // console.log(rsvp);
+  console.log(up1);
+  up1.userConnection.push(new userConnection(connection, rsvp))
+  console.log(up1);
+  // var u = new UserProfile_Mongo(up1);
+  // console.log(up1.userConnection[0]);
+
+  var query = {'_id': up1._id};
+
+  UserProfile_Mongo.findOneAndUpdate(query, up1.userConnection, {upsert: false}, function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      console.log("Done");
+    }
+  });
 }
 
-// const addUserConnectionM = function(connection, rsvp, callback){
-//   var userConnectionObj = new UserConnection_Mongo(new userConnection(connection, rsvp));
-//   userConnectionObj.save(function(err){
-//     if(err){
-//       console.log("Error while saving user connection: "+err);
-//       return;
-//     }
-//     callback();
-//   });
-// }
+  // var userConnectionObj = new UserConnection_Mongo(new userConnection(connection, rsvp));
+  // userConnectionObj.save(function(err){
+  //   if(err){
+  //     console.log("Error while saving user connection: "+err);
+  //     return;
+  //   }
+  //   callback();
+  // });
 
 const updateUserRsvp = function (up1, connection, rsvp){//updates the rsvp status
   for(i=0; i<up1._userConnection.length;i++){
@@ -66,10 +88,7 @@ const removeUserConnection = function (up1, connection){ //used for deletion, wh
 }
 
 
-
-module.exports.addUserConnection = addUserConnection;
-// module.exports.addUserConnectionM = addUserConnectionM;
+module.exports.addUserConnectionM = addUserConnectionM;
 module.exports.removeUserConnection = removeUserConnection;
 module.exports.updateUserRsvp = updateUserRsvp;
-// module.exports.initUserProfileM = initUserProfileM;
 module.exports.getUserProfileM = getUserProfileM;

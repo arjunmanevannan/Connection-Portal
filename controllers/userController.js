@@ -13,7 +13,6 @@ exports.postRenderLoginPage = async (req, res) => {
     res.render('login');
     return;
   }
-
   userProfileDB.getUserProfileM(user_email, function(userProfileObj){
     console.log("This is why I failed: "+userProfileObj);
     req.session.theUser = userProfileObj;

@@ -1,16 +1,14 @@
-const mongoose = require('mongoose');
-
-var userConnectionSchema = new mongoose.Schema({
-  connection:{
-    type: Object,
-    required: true
-  },
-  rsvp:{
-    type: String,
-    required: true
-  }
-},{
-  versionKey: false
-})
-
-module.exports = mongoose.model('useronnection', userConnectionSchema);
+// const mongoose = require('mongoose');
+// const connectionSchema = require('./connection.model.js');
+//
+// var userConnectionSchema = new mongoose.Schema({
+//   connection:connectionSchema,
+//   rsvp:{
+//     type: String,
+//     required: true
+//   }
+// },{
+//   versionKey: false
+// })
+//
+// module.exports = mongoose.model('userconnection', userConnectionSchema);
