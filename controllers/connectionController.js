@@ -78,9 +78,12 @@ exports.interestedConnection = (req, res) => {
   connectionDB.getConnectionM(req.query.connectionID, function(connection){
     if(connection!==null){
       console.log("We have a connection");
-      UserProfileDB.addUserConnectionM(req.session.theUser, connection, "Yes");
+      UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
+        console.log("We have a user profile object");
+        UserProfileDB.addUserConnectionM(userProfileObj, connection, "Yes");
+      });
     }
-  })
+  });
 }
 
 exports.updateRSVP = (req, res) => { //updates the rsvp status for added connections

@@ -35,6 +35,7 @@ const getUserProfileM = function(userEmail, callback){
 // }
 
 const addUserConnectionM = function(up1, connection, rsvp){
+  console.log(up1);
   up1.userConnection.push(new userConnection(connection, rsvp));
   UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {'userConnection':up1.userConnection}, function(err) {
     if (err) {
@@ -42,6 +43,7 @@ const addUserConnectionM = function(up1, connection, rsvp){
     }
     else{
       console.log("Done");
+      console.log("After insertion"+up1);
     }
   });
 }
@@ -49,10 +51,11 @@ const addUserConnectionM = function(up1, connection, rsvp){
 
 const updateUserRsvpM = function (up1, connection, rsvp){//updates the rsvp status
   for(i=0; i<up1.userConnection.length;i++){
-    if(up1.userConnection[i].connection.connectionID == connection.connectionID){
+    if(up1.userConnection[i].connection._id == connection._id){
         up1.userConnection[i].rsvp = rsvp;
     }
   }
+  console.log(up1);
   UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {userConnection:up1.userConnection}, function(err){
     if(err){
       console.log(err);
