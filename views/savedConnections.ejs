@@ -31,7 +31,7 @@
 					<td> <%- user.userConnection[i].connection.name -%> </td>
 					<td> <%- user.userConnection[i].connection.topic -%> </td>
 					<td> <%- user.userConnection[i].rsvp -%> </td>
-					<td> <button onclick = "location.href='connection/delete?connectionID=<%- user.userConnection[i].connection.connectionID -%>'" type="button">Delete</button> </td>
+					<td> <button onclick = "location.href='connection/delete?connectionID=<%- user.userConnection[i].connection._id -%>'" type="button">Delete</button> </td>
 				</tr>
 			<% } %>
 		</table>

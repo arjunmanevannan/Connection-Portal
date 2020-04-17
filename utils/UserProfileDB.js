@@ -46,69 +46,49 @@ const addUserConnectionM = function(up1, connection, rsvp){
   });
 }
 
-  // var userConnectionObj = new UserConnection_Mongo(new userConnection(connection, rsvp));
-  // userConnectionObj.save(function(err){
-  //   if(err){
-  //     console.log("Error while saving user connection: "+err);
-  //     return;
-  //   }
-  //   callback();
-  // });
 
-const updateUserRsvpM = function(up1, connection, rsvp){//updates the rsvp status
-  UserProfile_Mongo.findOne({'_id':up1._id}, function(err, userProfileObj){
+const updateUserRsvpM = function (up1, connection, rsvp){//updates the rsvp status
+  for(i=0; i<up1.userConnection.length;i++){
+    if(up1.userConnection[i].connection.connectionID == connection.connectionID){
+        up1.userConnection[i].rsvp = rsvp;
+    }
+  }
+  UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {userConnection:up1.userConnection}, function(err){
     if(err){
-      console.log("Cannot retrieve user profile: "+err);
+      console.log(err);
     }
     else{
-      UserProfile_Mongo.findOneAndUpdate({'userConnection.connection._id':connection._id}, {'user.country':rsvp}, function(err){
-        if(err){
-          console.log("Error updating RSVP: "+err);
-        }
-      })
+      console.log("Successfully updated user RSVP");
     }
   })
+  return up1;
 }
-
-// const getUserProfileM = function(userEmail, callback){
-//   UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
-//     if(err){
-//       console.log(err);
-//     }
-//     else{
-//       callback(userProfileObj);
-//     }
-//   });
-// }
-//
-// const addUserConnectionM = function(up1, connection, rsvp){
-//   up1.userConnection.push(new userConnection(connection, rsvp));
-//   UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {'userConnection':up1.userConnection}, function(err) {
-//     if (err) {
-//       console.log(err);
-//     }
-//     else{
-//       console.log("Done");
-//     }
-//   });
-// }
 
 
 function _arrayRemove(arr, value) {
 	return arr.filter(function(ele){
-    console.log(ele._connection._connectionID);
-		return ele._connection._connectionID != value._connectionID;
+    console.log(ele.connection._id);
+    // console.log("value"+value);
+		return ele.connection._id != value._id;
 	});
 }
 
-const removeUserConnection = function (up1, connection){ //used for deletion, when a user is no longer interested in attending a talk.
-  var uc = _arrayRemove(up1._userConnection, connection);
-  up1._userConnection = uc;
+const removeUserConnectionM = function (up1, connection){ //used for deletion, when a user is no longer interested in attending a talk.
+  var uc = _arrayRemove(up1.userConnection, connection);
+  up1.userConnection = uc;
+  UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {userConnection:up1.userConnection}, function(err){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("Successfully removed");
+    }
+  })
   return up1;
 }
 
 
 module.exports.addUserConnectionM = addUserConnectionM;
-module.exports.removeUserConnection = removeUserConnection;
+module.exports.removeUserConnectionM = removeUserConnectionM;
 module.exports.updateUserRsvpM = updateUserRsvpM;
 module.exports.getUserProfileM = getUserProfileM;

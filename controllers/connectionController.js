@@ -91,9 +91,10 @@ exports.updateRSVP = (req, res) => { //updates the rsvp status for added connect
 }
 
 exports.removeUserConnection = (req, res) => { // helps the user remove the connection from his dashboard.
-  var connection = connectionDB.getConnection(req.query.connectionID);
-  UserProfileDB.removeUserConnection(req.session.theUser, connection)
-  res.redirect('/savedConnections',200, {user: req.session.theUser});
+  connectionDB.getConnectionM(req.query.connectionID, function(connection){
+    UserProfileDB.removeUserConnectionM(req.session.theUser, connection)
+    res.redirect('/savedConnections',200, {user: req.session.theUser});
+  });
 }
 
 exports.deleteConnection = (req, res) => { // allows the owner to delete the connection from the website.
