@@ -6,13 +6,13 @@ const UserProfile_Mongo = db.userprofileModel;
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/TechMasters');
 let conn = mongoose.connection;
-
-var usr1 = new user('2111','Arjun','Manevannan','arjun@gmail.com');
-var usr2 = new user('2112','John','Doe','john@gmail.com');
-var usr3 = new user('2113','Bill','S','bill@gmail.com');
-var usr4 = new user('2114','Jack','Ma','jack@gmail.com');
-
-var users = [usr1, usr2, usr3, usr4];
+// 
+// var usr1 = new user('2111','Arjun','Manevannan','arjun@gmail.com');
+// var usr2 = new user('2112','John','Doe','john@gmail.com');
+// var usr3 = new user('2113','Bill','S','bill@gmail.com');
+// var usr4 = new user('2114','Jack','Ma','jack@gmail.com');
+//
+// var users = [usr1, usr2, usr3, usr4];
 
 // const getUsers = function(){
 //   return users;

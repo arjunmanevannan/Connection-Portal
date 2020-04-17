@@ -22,6 +22,5 @@ exports.renderPostNewUserPage = (req, res) => {
   UserDB.addUserM(newUser, function(newUser){
     UserDB.initUserProfileM(newUser);
   });
-
   res.redirect('/', 200, {user: req.session.theUser});
 }

@@ -15,7 +15,7 @@ exports.postRenderLoginPage = async (req, res) => {
   }
   userProfileDB.getUserProfileM(user_email, function(userProfileObj){
     req.session.theUser = userProfileObj;
-    res.render('savedConnections', {user: req.session.theUser});
+    res.redirect('/savedConnections', 200, {user: req.session.theUser});
   });
 }
 
