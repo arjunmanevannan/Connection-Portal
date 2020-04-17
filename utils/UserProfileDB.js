@@ -29,13 +29,16 @@ const getUserProfileM = function(userEmail, callback){
   });
 }
 
-// const addUserConnection = function (up1, connection, rsvp){ //used to add a new user connection
-//   up1.userConnection.push(new userConnection(connection, rsvp));
-//   return up1;
-// }
-
 const addUserConnectionM = function(up1, connection, rsvp){
-  console.log(up1);
+  for(i=0; i<up1.userConnection.length;i++){
+    if(up1.userConnection[i].connection._id.toString() == connection._id.toString()){
+      console.log("Given connection already added");
+      console.log("Updating rsvp");
+      updateUserRsvpM(up1, connection, rsvp);
+      return;
+    }
+  }
+  console.log("Since connection hasn'rt been added we're adding it now");
   up1.userConnection.push(new userConnection(connection, rsvp));
   UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {'userConnection':up1.userConnection}, function(err) {
     if (err) {
@@ -50,10 +53,7 @@ const addUserConnectionM = function(up1, connection, rsvp){
 
 const updateUserRsvpM = function (up1, connection, rsvp){//updates the rsvp status
   for(i=0; i<up1.userConnection.length;i++){
-    console.log(up1.userConnection[i].connection._id);
-    console.log(connection._id);
     if(up1.userConnection[i].connection._id.toString() == connection._id.toString()){
-      console.log("Yup");
       up1.userConnection[i].rsvp = rsvp;
     }
   }
@@ -72,7 +72,6 @@ const updateUserRsvpM = function (up1, connection, rsvp){//updates the rsvp stat
 function _arrayRemove(arr, value) {
 	return arr.filter(function(ele){
     console.log(ele.connection._id);
-    // console.log("value"+value);
 		return ele.connection._id != value._id;
 	});
 }

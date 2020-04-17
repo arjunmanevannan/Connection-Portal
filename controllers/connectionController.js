@@ -8,16 +8,6 @@ exports.renderSavedConnections = (req,res) => { //renders all the saved connecti
   UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
     res.render('savedConnections', {user: userProfileObj});
   });
-  // UserProfileDB.getUserProfileM(req.session.theUser.)
-  // var connections = req.session.theUser.userConnection;
-  // const uniqueConnections = Array.from(new Set(connections.map(c => c.connection.connectionID)))
-  // .map(id => {
-  //   return connections.find(c => c.connection.connectionID === id)
-  // })
-  //
-  // req.session.theUser.userConnection = uniqueConnections;
-
-  // res.render('savedConnections', {user:req.session.theUser});
 }
 
 exports.renderConnections = (req, res) => {
