@@ -40,7 +40,6 @@ const addConnectionM = function(connection, callback){
 
 const getConnectionM = function(connectionID, callback){
   Connection_Mongo.findOne({_id:connectionID}, function(err, result){
-    console.log(result);
     callback(result);
   });
 }

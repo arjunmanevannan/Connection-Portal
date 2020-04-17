@@ -84,9 +84,10 @@ exports.interestedConnection = (req, res) => {
 }
 
 exports.updateRSVP = (req, res) => { //updates the rsvp status for added connections
-  var connection = connectionDB.getConnection(req.query.connectionID);
-  UserProfileDB.updateUserRsvp(req.session.theUser, connection, req.query.rsvp);
-  res.redirect('/savedConnections',200, {user: req.session.theUser});
+  connectionDB.getConnectionM(req.query.connectionID, function(connection){
+    UserProfileDB.updateUserRsvpM(req.session.theUser, connection, req.query.rsvp);
+    res.redirect('/savedConnections',200, {user: req.session.theUser});
+  });
 }
 
 exports.removeUserConnection = (req, res) => { // helps the user remove the connection from his dashboard.

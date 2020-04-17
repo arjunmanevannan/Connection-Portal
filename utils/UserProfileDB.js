@@ -55,14 +55,43 @@ const addUserConnectionM = function(up1, connection, rsvp){
   //   callback();
   // });
 
-const updateUserRsvp = function (up1, connection, rsvp){//updates the rsvp status
-  for(i=0; i<up1._userConnection.length;i++){
-    if(up1._userConnection[i]._connection._connectionID == connection._connectionID){
-        up1._userConnection[i]._rsvp = rsvp;
+const updateUserRsvpM = function(up1, connection, rsvp){//updates the rsvp status
+  UserProfile_Mongo.findOne({'_id':up1._id}, function(err, userProfileObj){
+    if(err){
+      console.log("Cannot retrieve user profile: "+err);
     }
-  }
-  return up1;
+    else{
+      UserProfile_Mongo.findOneAndUpdate({'userConnection.connection._id':connection._id}, {'user.country':rsvp}, function(err){
+        if(err){
+          console.log("Error updating RSVP: "+err);
+        }
+      })
+    }
+  })
 }
+
+// const getUserProfileM = function(userEmail, callback){
+//   UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
+//     if(err){
+//       console.log(err);
+//     }
+//     else{
+//       callback(userProfileObj);
+//     }
+//   });
+// }
+//
+// const addUserConnectionM = function(up1, connection, rsvp){
+//   up1.userConnection.push(new userConnection(connection, rsvp));
+//   UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {'userConnection':up1.userConnection}, function(err) {
+//     if (err) {
+//       console.log(err);
+//     }
+//     else{
+//       console.log("Done");
+//     }
+//   });
+// }
 
 
 function _arrayRemove(arr, value) {
@@ -81,5 +110,5 @@ const removeUserConnection = function (up1, connection){ //used for deletion, wh
 
 module.exports.addUserConnectionM = addUserConnectionM;
 module.exports.removeUserConnection = removeUserConnection;
-module.exports.updateUserRsvp = updateUserRsvp;
+module.exports.updateUserRsvpM = updateUserRsvpM;
 module.exports.getUserProfileM = getUserProfileM;
