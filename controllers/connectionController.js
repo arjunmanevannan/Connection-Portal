@@ -77,9 +77,7 @@ exports.renderConnection = (req, res) => { //rendering a new connection. The met
 exports.interestedConnection = (req, res) => {
   connectionDB.getConnectionM(req.query.connectionID, function(connection){
     if(connection!==null){
-      console.log("We have a connection");
       UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
-        console.log("We have a user profile object");
         UserProfileDB.addUserConnectionM(userProfileObj, connection, "Yes");
       });
     }
@@ -88,8 +86,12 @@ exports.interestedConnection = (req, res) => {
 
 exports.updateRSVP = (req, res) => { //updates the rsvp status for added connections
   connectionDB.getConnectionM(req.query.connectionID, function(connection){
-    UserProfileDB.updateUserRsvpM(req.session.theUser, connection, req.query.rsvp);
-    res.redirect('/savedConnections',200, {user: req.session.theUser});
+    if(connection!==null){
+      UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
+        UserProfileDB.updateUserRsvpM(userProfileObj, connection, req.query.rsvp);
+        res.redirect('/savedConnections',200, {user: req.session.theUser});
+      });
+    }
   });
 }
 
