@@ -35,17 +35,8 @@ const getUserProfileM = function(userEmail, callback){
 // }
 
 const addUserConnectionM = function(up1, connection, rsvp){
-  // console.log(connection);
-  // console.log(rsvp);
-  console.log(up1);
-  up1.userConnection.push(new userConnection(connection, rsvp))
-  console.log(up1);
-  // var u = new UserProfile_Mongo(up1);
-  // console.log(up1.userConnection[0]);
-
-  var query = {'_id': up1._id};
-
-  UserProfile_Mongo.findOneAndUpdate(query, up1.userConnection, {upsert: false}, function(err, doc) {
+  up1.userConnection.push(new userConnection(connection, rsvp));
+  UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {'userConnection':up1.userConnection}, function(err) {
     if (err) {
       console.log(err);
     }

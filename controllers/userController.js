@@ -17,7 +17,7 @@ exports.postRenderLoginPage = async (req, res) => {
     console.log("This is why I failed: "+userProfileObj);
     req.session.theUser = userProfileObj;
     res.render('savedConnections', {user: req.session.theUser});
-  })
+  });
 }
 
 exports.renderLogoutPage = (req,res) => {
