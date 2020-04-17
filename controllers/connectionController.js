@@ -87,6 +87,7 @@ exports.removeUserConnection = (req, res) => { // helps the user remove the conn
 exports.deleteConnection = (req, res) => { // allows the owner to delete the connection from the website.
   var id = req.query.connectionID;
   connectionDB.deleteConnectionM(id, function(){
+    // console.log("Email"+req.session.theUser.user.emailAddress);
     res.redirect('/connections', 200, {user:req.session.theUser});
   });
 }

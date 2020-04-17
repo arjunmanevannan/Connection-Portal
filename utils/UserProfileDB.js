@@ -72,7 +72,7 @@ const updateUserRsvpM = function (up1, connection, rsvp){//updates the rsvp stat
 function _arrayRemove(arr, value) {
 	return arr.filter(function(ele){
     console.log(ele.connection._id);
-		return ele.connection._id != value._id;
+		return ele.connection._id.toString() != value._id.toString();
 	});
 }
 
