@@ -34,18 +34,22 @@ const getConnectionM = function(connectionID, callback){
 
 const deleteConnectionM = function(connectionID, callback){
   UserProfile_Mongo.find({}, function(err, result){
-    console.log(result.length);
-    for(var i=0; i<result.length;i++){
-      UserProfileDB.removeUserConnectionM(result[i], getConnectionM(connectionID));
-    }
+    getConnectionM(connectionID, function(connection){
+      console.log("The connection to be deleted: "+connection);
+      for(var i=0; i<result.length;i++){
+        UserProfileDB.removeUserConnectionM(result[i], connection, function(){
+          console.log("Connection has been processed");
+        });
+      }
+      Connection_Mongo.findOneAndRemove({_id:connectionID}, function(err){
+        if(err){
+          console.log("Error deleting the record: "+err);
+          return;
+        }
+        callback();
+      })
+    });
   });
-
-  Connection_Mongo.findOneAndRemove({_id:connectionID}, function(err){
-    if(err){
-      console.log("Error deleting the record: "+err);
-    }
-    callback();
-  })
 }
 
 
