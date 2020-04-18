@@ -48,11 +48,7 @@ const deleteConnectionM = function(connectionID, callback){
   Connection_Mongo.findOneAndRemove({_id:connectionID}, function(err){
     if(err){
       console.log("Error deleting the record: "+err);
-      return;
     }
-    UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
-      UserProfileDB.removeUserConnectionM(userProfileObj, connectionID);
-    })
     callback();
   })
 }
