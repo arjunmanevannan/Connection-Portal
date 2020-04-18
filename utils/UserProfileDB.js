@@ -12,12 +12,6 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/TechMasters');
 let conn = mongoose.connection;
 
-// const initUserProfile = function(user){ //initializes the user profile. The object is intantiated here and added to session.
-//   var uc = [];
-//   var up1 = new userProfile(user, uc);
-//   return up1;
-// }
-
 const getUserProfileM = function(userEmail, callback){
   UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
     if(err){
@@ -69,25 +63,26 @@ const updateUserRsvpM = function (up1, connection, rsvp){//updates the rsvp stat
 }
 
 
-function _arrayRemove(arr, value) {
-	return arr.filter(function(ele){
-    console.log(ele.connection._id);
+function _arrayRemove(arr, value, callback) {
+	var uc =  arr.filter(function(ele){
 		return ele.connection._id.toString() != value._id.toString();
 	});
+  callback(uc);
 }
 
-const removeUserConnectionM = function (up1, connection){ //used for deletion, when a user is no longer interested in attending a talk.
-  var uc = _arrayRemove(up1.userConnection, connection);
-  up1.userConnection = uc;
-  UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {userConnection:up1.userConnection}, function(err){
-    if(err){
-      console.log(err);
-    }
-    else{
-      console.log("Successfully removed");
-    }
-  })
-  return up1;
+const removeUserConnectionM = function (up1, connection, callback){ //used for deletion, when a user is no longer interested in attending a talk.
+  console.log("Before "+up1.userConnection.length);
+  _arrayRemove(up1.userConnection, connection, function(uc){
+    console.log("After "+uc.length);
+    up1.userConnection = uc;
+    UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {userConnection:up1.userConnection}, function(err){
+      if(err){
+        console.log("Error deleting user connection "+err);
+        return;
+      }
+      callback(up1);
+    });
+  });
 }
 
 

@@ -61,6 +61,7 @@ exports.interestedConnection = (req, res) => {
     if(connection!==null){
       UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
         UserProfileDB.addUserConnectionM(userProfileObj, connection, "Yes");
+        res.redirect('/savedConnections',200, {user: req.session.theUser});
       });
     }
   });
@@ -79,15 +80,22 @@ exports.updateRSVP = (req, res) => { //updates the rsvp status for added connect
 
 exports.removeUserConnection = (req, res) => { // helps the user remove the connection from his dashboard.
   connectionDB.getConnectionM(req.query.connectionID, function(connection){
-    UserProfileDB.removeUserConnectionM(req.session.theUser, connection)
-    res.redirect('/savedConnections',200, {user: req.session.theUser});
+    if(connection){
+      UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
+        if(userProfileObj){
+          UserProfileDB.removeUserConnectionM(userProfileObj, connection, function(up1){
+            req.session.theUser = up1;
+            res.redirect('/savedConnections', 200, {user: req.session.theUser});
+          });
+        }
+      })
+    }
   });
 }
 
 exports.deleteConnection = (req, res) => { // allows the owner to delete the connection from the website.
   var id = req.query.connectionID;
   connectionDB.deleteConnectionM(id, function(){
-    // console.log("Email"+req.session.theUser.user.emailAddress);
     res.redirect('/connections', 200, {user:req.session.theUser});
   });
 }
