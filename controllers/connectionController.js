@@ -60,23 +60,24 @@ exports.interestedConnection = (req, res) => {
   connectionDB.getConnectionM(req.query.connectionID, function(connection){
     if(connection!==null){
       UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
-        UserProfileDB.addUserConnectionM(userProfileObj, connection, "Yes");
-        res.redirect('/savedConnections',200, {user: req.session.theUser});
+        UserProfileDB.addUserConnectionM(userProfileObj, connection, req.query.rsvp,function(){
+          res.redirect('/savedConnections',200, {user: req.session.theUser});
+        });
       });
     }
   });
 }
 
-exports.updateRSVP = (req, res) => { //updates the rsvp status for added connections
-  connectionDB.getConnectionM(req.query.connectionID, function(connection){
-    if(connection!==null){
-      UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
-        UserProfileDB.updateUserRsvpM(userProfileObj, connection, req.query.rsvp);
-        res.redirect('/savedConnections',200, {user: req.session.theUser});
-      });
-    }
-  });
-}
+// exports.updateRSVP = (req, res) => { //updates the rsvp status for added connections
+//   connectionDB.getConnectionM(req.query.connectionID, function(connection){
+//     if(connection!==null){
+//       UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
+//         UserProfileDB.updateUserRsvpM(userProfileObj, connection, req.query.rsvp);//check with addUserConnectionM
+//         res.redirect('/savedConnections',200, {user: req.session.theUser});
+//       });
+//     }
+//   });
+// }
 
 exports.removeUserConnection = (req, res) => { // helps the user remove the connection from his dashboard.
   connectionDB.getConnectionM(req.query.connectionID, function(connection){
