@@ -34,6 +34,7 @@ const getConnectionM = function(connectionID, callback){
 
 const deleteConnectionM = function(connectionID, callback){
   UserProfile_Mongo.find({}, function(err, result){
+    console.log(result.length);
     for(var i=0; i<result.length;i++){
       UserProfileDB.removeUserConnectionM(result[i], getConnectionM(connectionID));
     }
