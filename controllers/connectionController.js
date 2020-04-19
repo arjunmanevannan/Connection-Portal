@@ -6,7 +6,17 @@ const UserProfileDB = require('./../utils/UserProfileDB.js')
 
 exports.renderSavedConnections = (req,res) => { //renders all the saved connections from the "DB"
   UserProfileDB.getUserProfileM(req.session.theUser.user.emailAddress, function(userProfileObj){
-    res.render('savedConnections', {user: userProfileObj});
+    connectionDB.getConnectionsM(function(connections){
+      var hostedConnections = [];
+      for(var i=0; i<connections.length;i++){
+        if(connections[i].host.emailAddress == req.session.theUser.user.emailAddress){
+          hostedConnections.push(connections[i]);
+        }
+      }
+      console.log(hostedConnections.length);
+      res.render('savedConnections', {user: userProfileObj, conn:hostedConnections});
+    })
+
   });
 }
 
