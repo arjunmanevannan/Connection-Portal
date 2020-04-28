@@ -38,16 +38,16 @@ const initUserProfileM = function(userObj){
   })
 }
 
-const getUserM = async function(userEmail){
+const getUserM = function(userEmail, callback){
   var loggedInUser = "";
-  await User_Mongo.findOne({emailAddress: userEmail}, function(err, userObj){
+  User_Mongo.findOne({emailAddress: userEmail}, function(err, userObj){
     if(err){
       console.log(err);
     }else{
       loggedInUser = userObj;
+      callback(loggedInUser);
     }
   });
-  return loggedInUser;
 }
 
 module.exports.initUserProfileM = initUserProfileM;

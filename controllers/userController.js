@@ -5,18 +5,25 @@ exports.renderLoginPage = (req,res) => {
   res.render('login');
 }
 
-exports.postRenderLoginPage = async (req, res) => {
+exports.postRenderLoginPage = (req, res) => {
   var user_email = req.body.user.email;
-  var usr = await userDB.getUserM(user_email);
-  if(!usr){
-    console.log("No user found in the DB. Please sign up");
-    res.render('login');
-    return;
-  }
-  userProfileDB.getUserProfileM(user_email, function(userProfileObj){
-    req.session.theUser = userProfileObj;
-    res.redirect('/savedConnections', 200, {user: req.session.theUser});
-  });
+  var user_pwd = req.body.user.password;
+  userDB.getUserM(user_email, function(usr){
+    if(!usr){
+      console.log("No user found in the DB. Please sign up");
+      res.render('login');
+      return;
+    } else if(usr.password === user_pwd){
+      console.log(usr);
+      userProfileDB.getUserProfileM(user_email, function(userProfileObj){
+        req.session.theUser = userProfileObj;
+        res.redirect('/savedConnections', 200, {user: req.session.theUser});
+      });
+    } else if(usr.password !== user_pwd){
+      console.log("Incorrect Password");
+    }
+  })
+  // var usr = userDB.getUserM(user_email);
 }
 
 exports.renderLogoutPage = (req,res) => {

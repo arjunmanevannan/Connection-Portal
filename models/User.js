@@ -1,8 +1,9 @@
 class User {
-    constructor(firstName, lastName, emailAddress, addressLine1, addressLine2, city, state, zip, country){
+    constructor(firstName, lastName, emailAddress, password, addressLine1, addressLine2, city, state, zip, country){
       this.firstName = firstName;
       this.lastName = lastName;
       this.emailAddress = emailAddress;
+      this.password = password;
       if(typeof addressLine1 === 'undefined'){
         this.addressLine1 = "";
       }
