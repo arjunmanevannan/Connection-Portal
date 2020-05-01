@@ -1,7 +1,7 @@
 const connectionDB = require('./../utils/ConnectionDB.js')
 const Connection = require('./../models/Connection.js')
 const UserProfileDB = require('./../utils/UserProfileDB.js')
-
+const {validationResult} = require('express-validator');
 
 
 exports.renderSavedConnections = (req,res) => { //renders all the saved connections from the "DB"
@@ -32,17 +32,34 @@ exports.renderNewConnection = (req, res) => { //used for rendering new connectio
     res.render('login', {user:req.session.theUser});
   }
   else{
-    res.render('newConnection', {user: req.session.theUser});
+    res.render('newConnection', {errors:null, user: req.session.theUser});
   }
 }
 
 exports.postRenderNewConnection = (req, res) => { //used to render new connection
-  var newConnection = new Connection(req.body.connection.name, req.session.theUser.user, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
-  connectionDB.addConnectionM(newConnection, function(){
-    connectionDB.getConnectionsM(function(connections){
-      res.render('connections', {obj:connections, user:req.session.theUser});
+  const result = validationResult(req);
+  var errors = result.errors;
+
+  var today = new Date();
+  var convertedDate = new Date(req.body.connection.date);
+
+  if(today > convertedDate){
+    console.log("Invalid date");
+    result.push('Date cannot be older than todas date');
+  }
+
+  if(!result.isEmpty()){
+    console.log(errors);
+    res.render('newConnection', {errors:errors, user:req.session.theUser});
+  }
+  else{
+    var newConnection = new Connection(req.body.connection.name, req.session.theUser.user, req.body.connection.topic, req.body.connection.details, req.body.connection.date, req.body.connection.time);
+    connectionDB.addConnectionM(newConnection, function(){
+      connectionDB.getConnectionsM(function(connections){
+        res.render('connections', {obj:connections, user:req.session.theUser});
+      })
     })
-  })
+  }
 }
 
 exports.renderConnection = (req, res) => { //rendering a new connection. The method checks the connection ID for a valid connection and returs it.

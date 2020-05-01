@@ -16,19 +16,25 @@
 	</header>
 
   <div class = "form">
-  	<h1>Sign up below!</h1>
-
+		<h5>Fields marked with * are mandatory</h5>
+		<% if(errors){ %>
+			<ul>
+				<% if(errors.length > 0){ %>
+					<li> <%= errors[0].msg %> </li>
+				<% } %>
+			</ul>
+		<% } %>
 		<form action = "/newUser" method="post">
-			<label for="user[firstName]"> First Name: </label><br>
+			<label for="user[firstName]"> First Name*: </label><br>
 			<input type="text" name="user[firstName]"><br>
 
-      <label for="user[lastName]"> Last Name: </label><br>
+      <label for="user[lastName]"> Last Name*: </label><br>
 			<input type="text" name="user[lastName]"><br><br>
 
-      <label for="user[emailAddress]"> Email Address: </label><br>
+      <label for="user[emailAddress]"> Email Address*: </label><br>
 			<input type="text" name="user[emailAddress]"><br><br>
 
-			<label for="user[password]"> Choose Password: </label><br>
+			<label for="user[password]"> Choose Password*: </label><br>
 			<input type="text" name="user[password]"><br><br>
 
       <label for="user[addressLine1]"> Address Line 1: </label><br>
