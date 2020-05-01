@@ -15,7 +15,7 @@ exports.renderContactPage = (req,res) => {
 }
 
 exports.renderNewUserPage = (req,res) => {
-  res.render('newUser', {errors: null, e:null});
+  res.render('newUser', {errors: null});
 }
 
 exports.renderPostNewUserPage = (req, res) => {
@@ -24,13 +24,19 @@ exports.renderPostNewUserPage = (req, res) => {
   console.log(result);
 
   if(!result.isEmpty()){
-    res.render('newUser', {errors: errors, e:null});
+    res.render('newUser', {errors: errors});
   }
   else{
     var newUser = new User(req.body.user.firstName, req.body.user.lastName, req.body.user.emailAddress, req.body.user.password, req.body.user.addressLine1, req.body.user.addressLine2, req.body.user.city, req.body.user.state, req.body.user.zip, req.body.user.country);
     UserDB.addUserM(newUser, function(newUser){
-      UserDB.initUserProfileM(newUser);
+      if(newUser === null){
+        var e = ["User already present. Please log in"];
+        res.render('login', {errors:null, e:e});
+      }
+      else{
+        UserDB.initUserProfileM(newUser);
+        res.redirect('/', 200, {user: req.session.theUser});
+      }
     });
-    res.redirect('/', 200, {user: req.session.theUser});
   }
 }

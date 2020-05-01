@@ -14,6 +14,8 @@ const addUserM = function(user, callback){
     }
     else if(userObj){
       console.log("Object exists. Can't create a user");
+      callback(null);
+      return;
     }
     else{
       var userObj = new User_Mongo(user);

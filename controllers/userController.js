@@ -28,6 +28,8 @@ exports.postRenderLoginPage = (req, res) => {
           res.redirect('/savedConnections', 200, {user: req.session.theUser});
         });
       } else if(usr.password !== user_pwd){
+        var e = ["Incorrect Password"];
+        res.render('login', {errors:null, e:e});
         console.log("Incorrect Password");
       }
     })
