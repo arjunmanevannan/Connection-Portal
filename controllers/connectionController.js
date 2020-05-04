@@ -40,14 +40,6 @@ exports.postRenderNewConnection = (req, res) => { //used to render new connectio
   const result = validationResult(req);
   var errors = result.errors;
 
-  var today = new Date();
-  var convertedDate = new Date(req.body.connection.date);
-
-  if(today > convertedDate){
-    console.log("Invalid date");
-    result.push('Date cannot be older than todas date');
-  }
-
   if(!result.isEmpty()){
     console.log(errors);
     res.render('newConnection', {errors:errors, user:req.session.theUser});

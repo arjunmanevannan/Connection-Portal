@@ -14,8 +14,6 @@ const addUserM = function(user, callback){
     }
     else if(userObj){
       console.log("Object exists. Can't create a user");
-      callback(null);
-      return;
     }
     else{
       var userObj = new User_Mongo(user);
@@ -40,9 +38,9 @@ const initUserProfileM = function(userObj){
   })
 }
 
-const getUserM = function(userEmail, callback){
+const getUserM = async function(userEmail, callback){
   var loggedInUser = "";
-  User_Mongo.findOne({emailAddress: userEmail}, function(err, userObj){
+  await User_Mongo.findOne({emailAddress: userEmail}, function(err, userObj){
     if(err){
       console.log(err);
     }else{

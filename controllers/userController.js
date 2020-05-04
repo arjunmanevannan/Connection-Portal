@@ -3,14 +3,14 @@ var userProfileDB = require('./../utils/UserProfileDB.js')
 const {validationResult} = require('express-validator');
 
 exports.renderLoginPage = (req,res) => {
-  res.render('login', {errors: null, e:null});
+  res.render('login', {errors: null});
 }
 
 exports.postRenderLoginPage = (req, res) => {
   const result = validationResult(req);
   var errors = result.errors;
   if(!result.isEmpty()){
-    res.render('login', {errors: errors, e:null});
+    res.render('login', {errors: errors});
   }
   else{
     var user_email = req.body.user.email;
