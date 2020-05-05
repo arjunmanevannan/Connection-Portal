@@ -18,18 +18,15 @@ exports.postRenderLoginPage = (req, res) => {
     userDB.getUserM(user_email, function(usr){
       if(!usr){
         console.log("No user found in the DB. Please sign up");
-        var e = ["No user found in the DB. Please sign up"];
-        res.render('login', {errors:null, e:e});
-        return;
+        res.render('login', {errors: null});
       } else if(usr.password === user_pwd){
-        console.log(usr);
         userProfileDB.getUserProfileM(user_email, function(userProfileObj){
           req.session.theUser = userProfileObj;
           res.redirect('/savedConnections', 200, {user: req.session.theUser});
         });
       } else if(usr.password !== user_pwd){
-        var e = ["Incorrect Password"];
-        res.render('login', {errors:null, e:e});
+        // var e = ["Incorrect Password"];
+        res.render('login', {errors:errors});
         console.log("Incorrect Password");
       }
     })

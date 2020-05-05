@@ -97,19 +97,53 @@ router.post("/login", [
   check('user[email]')
   .not().isEmpty().withMessage('The user name field cannot be empty')
   .isEmail().withMessage('Not a valid email address'),
-  body('user[email]', 'User account no exist. Please sign up')
-  .custom(val => {
-    UserDB.getUserM(val, function(user){
+  check('user[email]').custom(async val => {
+    var value = true;
+    await UserDB.getUserM(val, function(user){
       if(user){
         console.log(user);
-        return false;
+        value = true;
       }
-      return true;
+      else{
+        value = false;
+      }
     });
+    if(value){
+      return true;
+    }
+    else{
+      return Promise.reject('No user present with this account. Please Sign up');
+    }
+  }),
+  check('user[email]').custom(async (val, {req}) => {
+    var value = true;
+    await UserDB.getUserM(val, function(user){
+      if(user){
+        var password = user.password;
+        // console.log(password);
+        // console.log(req.body.user.password);
+        if(password !== req.body.user.password){
+          // console.log("The passswords do not match");
+          value = false;
+        }
+        else if(password === req.body.user.password){
+          // console.log("Password match");
+          value = true;
+        }
+      }
+    });
+
+    console.log("VALUE: "+value);
+
+    if(value){
+      return true;
+    }
+    else{
+      return Promise.reject('Wrong Password');
+    }
   }),
   check('user[password]')
-  .not().isEmpty().withMessage('The password field should not be empty'),
-
+  .not().isEmpty().withMessage('The password field should not be empty')
 ], userController.postRenderLoginPage);
 router.get("/logout", userController.renderLogoutPage);
 
