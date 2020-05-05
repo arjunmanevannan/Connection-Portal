@@ -14,8 +14,6 @@ exports.renderSavedConnections = (req,res) => { //renders all the saved connecti
         }
       }
       console.log(hostedConnections.length);
-      console.log("The user object sent to saved connections"+hostedConnections);
-      console.log(hostedConnections[0]._id);
       res.render('savedConnections', {user: userProfileObj, conn:hostedConnections});
     })
 

@@ -83,9 +83,11 @@ router.post("/newConnection", [
   .not().isEmpty().withMessage('The time cannot be empty'),
   body('connection[date]', 'Date cannot be past')
   .custom(val => {
-    var today = new Date();
+    var today = new Date().toLocaleString();
     var convertedDate = new Date(val);
-    if(today > convertedDate){
+    console.log(today);
+    console.log(convertedDate);
+    if(today >= convertedDate){
       return false;
     }
     return true;
