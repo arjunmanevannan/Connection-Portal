@@ -29,7 +29,7 @@ exports.renderConnections = (req, res) => {
 exports.renderNewConnection = (req, res) => { //used for rendering new connections
   console.log(req.session.theUser);
   if(req.session.theUser == null){
-    res.render('login', {user:req.session.theUser});
+    res.render('login', {errors: null, user:req.session.theUser});
   }
   else{
     res.render('newConnection', {errors:null, user: req.session.theUser});

@@ -16,7 +16,6 @@
 	</header>
 
   <div class = "form">
-		<h5>Fields marked with * are mandatory</h5>
 		<% if(errors){ %>
 			<ul>
 				<% if(errors.length > 0){ %>
@@ -24,7 +23,7 @@
 				<% } %>
 			</ul>
 		<% } %>
-		
+
 		<form action = "/newUser" method="post">
 			<label for="user[firstName]"> First Name*: </label><br>
 			<input type="text" name="user[firstName]"><br>
