@@ -32,9 +32,12 @@ const getConnectionM = function(connectionID, callback){
   });
 }
 
-const deleteConnectionM = function(connectionID, callback){
-  UserProfile_Mongo.find({}, function(err, result){
+const deleteConnectionM = async function(connectionID, callback){
+  await UserProfile_Mongo.find({}, function(err, result){
+    // console.log("Searching for userProfile objects");
+    // console.log(result);
     getConnectionM(connectionID, function(connection){
+      console.log("Connection ID "+connectionID);
       console.log("The connection to be deleted: "+connection);
       for(var i=0; i<result.length;i++){
         UserProfileDB.removeUserConnectionM(result[i], connection, function(){

@@ -53,7 +53,7 @@
 							<td> <%- conn[i].name -%> </td>
 							<td> <%- conn[i].topic -%> </td>
 							<td> <%- conn[i].date -%> </td>
-							<td> <button onclick = "location.href='connection/deleteConnection?connectionID=<%- conn._id -%>'" type="button">Delete</button> </td>
+							<td> <button onclick = "location.href='connection/deleteConnection?connectionID=<%- conn[i]._id -%>'" type="button">Delete</button> </td>
 						</tr>
 					<% } %>
 				</table>

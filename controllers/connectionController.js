@@ -14,6 +14,8 @@ exports.renderSavedConnections = (req,res) => { //renders all the saved connecti
         }
       }
       console.log(hostedConnections.length);
+      console.log("The user object sent to saved connections"+hostedConnections);
+      console.log(hostedConnections[0]._id);
       res.render('savedConnections', {user: userProfileObj, conn:hostedConnections});
     })
 
@@ -115,6 +117,7 @@ exports.removeUserConnection = (req, res) => { // helps the user remove the conn
 
 exports.deleteConnection = (req, res) => { // allows the owner to delete the connection from the website.
   var id = req.query.connectionID;
+  console.log(id+"ID");
   connectionDB.deleteConnectionM(id, function(){
     res.redirect('/connections', 200, {user:req.session.theUser});
   });
