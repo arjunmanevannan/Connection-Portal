@@ -21,36 +21,36 @@
 	<main class = "itemMain">
 		<section class = "itemDesc">
 
-		<h2> <%= obj._name %> </h2>
+		<h2> <%= obj.name %> </h2>
 			<section>
 				<p style="float: left;"><img src="../public/img/logo_netbeans_red.png" alt = "netbeans_logo" height="100" width="100"></p>
-				<small>Hosted by: <%= obj._host._firstName %> <BR> Date: <%= obj._date %> <BR> Time: <%= obj._time %></small>
+				<small>Hosted by: <%= obj.host.firstName %> <BR> Date: <%= obj.date %> <BR> Time: <%= obj.time %></small>
 			</section>
 			<BR>
 		<h4> Details </h4>
-		<%= obj._details %>
+		<%= obj.details %>
 		</section>
 
-		<% if((user==null) || (user._user._userID != obj._host._userID)){ %> 
+		<% if((user==null) || (user.user._id != obj.host._id)){ %>
 			<section class = "itemPoll">
 				<p id = "pollText"> Are you going? 3 people are going </p>
 				<BR>
 				<div id = "pollButtons">
 
 					<button class = "Yes" onclick = <% if(user) { %>
-						"location.href='connection/interested?connectionID=<%- obj._connectionID -%>'"
+						"location.href='connection/interested?connectionID=<%- obj._id -%>&rsvp=Yes'"
 					<% }else{ %>
 						"location.href='login'"
 					<% } %>> Yes </button>
 
 					<button class = "No" onclick = <% if(user) { %>
-						"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=No'"
+						"location.href='connection/interested?connectionID=<%- obj._id -%>&rsvp=No'"
 					<% }else{ %>
 						"location.href='login'"
 					<% } %>> No </button>
 
 					<button class = "Maybe" onclick = <% if(user) { %>
-						"location.href='connection/updatersvp?connectionID=<%- obj._connectionID -%>&rsvp=Maybe'"
+						"location.href='connection/interested?connectionID=<%- obj._id -%>&rsvp=Maybe'"
 					<% }else{ %>
 						"location.href='login'"
 					<% } %>> Maybe </button>
@@ -59,7 +59,7 @@
 			</section>
 		<% } else { %>
 			<button onclick = <% if(user) { %>
-				"location.href='connection/deleteConnection?connectionID=<%- obj._connectionID -%>'"
+				"location.href='connection/deleteConnection?connectionID=<%- obj._id -%>'"
 			<% }else{ %>
 				"location.href='login'"
 			<% } %>> Delete this Connection </button>

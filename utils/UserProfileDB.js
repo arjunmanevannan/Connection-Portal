@@ -3,42 +3,91 @@ const userConnection = require('./../models/UserConnection.js')
 const userProfile = require('./../models/UserProfile.js')
 const connection = require('./../models/Connection.js')
 
-const initUserProfile = function (user){ //initializes the user profile. The object is intantiated here and added to session.
-  var uc = [];
-  var up1 = new userProfile(user, uc);
-  return up1;
+const db = require('./../models/db.js');
+const User_Mongo = db.userModel;
+const UserProfile_Mongo = db.userprofileModel;
+const UserConnection_Mongo = db.userconnectionModel;
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/TechMasters');
+let conn = mongoose.connection;
+
+const getUserProfileM = function(userEmail, callback){
+  UserProfile_Mongo.findOne({'user.emailAddress': userEmail}, function(err, userProfileObj){
+    if(err){
+      console.log(err);
+    }
+    else{
+      callback(userProfileObj);
+    }
+  });
 }
 
-const addUserConnection = function (up1, connection, rsvp){ //used to add a new user connection
-  up1._userConnection.push(new userConnection(connection, rsvp));
-  return up1;
-}
-
-const updateUserRsvp = function (up1, connection, rsvp){//updates the rsvp status
-  for(i=0; i<up1._userConnection.length;i++){
-    if(up1._userConnection[i]._connection._connectionID == connection._connectionID){
-        up1._userConnection[i]._rsvp = rsvp;
+const addUserConnectionM = function(up1, connection, rsvp, callback){
+  for(i=0; i<up1.userConnection.length;i++){
+    if(up1.userConnection[i].connection._id.toString() == connection._id.toString()){
+      console.log("Given connection already added");
+      console.log("Updating rsvp");
+      updateUserRsvpM(up1, connection, rsvp, callback);
+      return;
     }
   }
-  return up1;
+  console.log("Since connection hasn't been added we're adding it now");
+  up1.userConnection.push(new userConnection(connection, rsvp));
+  UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {'userConnection':up1.userConnection}, function(err) {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      console.log("Done");
+      callback(up1);
+    }
+  });
 }
 
 
-function _arrayRemove(arr, value) {
-	return arr.filter(function(ele){
-    console.log(ele._connection._connectionID);
-		return ele._connection._connectionID != value._connectionID;
+const updateUserRsvpM = function (up1, connection, rsvp, callback){//updates the rsvp status
+  for(i=0; i<up1.userConnection.length;i++){
+    if(up1.userConnection[i].connection._id.toString() == connection._id.toString()){
+      up1.userConnection[i].rsvp = rsvp;
+    }
+  }
+  UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {userConnection:up1.userConnection}, function(err){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("Successfully updated user RSVP");
+       callback();
+    }
+  });
+}
+
+
+function _arrayRemove(arr, value, callback) {
+	var uc =  arr.filter(function(ele){
+		return ele.connection._id.toString() != value._id.toString();
 	});
+  callback(uc);
 }
 
-const removeUserConnection = function (up1, connection){ //used for deletion, when a user is no longer interested in attending a talk.
-  var uc = _arrayRemove(up1._userConnection, connection);
-  up1._userConnection = uc;
-  return up1;
+const removeUserConnectionM = function (up1, connection, callback){ //used for deletion, when a user is no longer interested in attending a talk.
+  console.log("Before "+up1.userConnection.length);
+  _arrayRemove(up1.userConnection, connection, function(uc){
+    console.log("After "+uc.length);
+    up1.userConnection = uc;
+    UserProfile_Mongo.findOneAndUpdate({'_id':up1._id}, {userConnection:up1.userConnection}, function(err){
+      if(err){
+        console.log("Error deleting user connection "+err);
+        return;
+      }
+      callback(up1);
+    });
+  });
 }
 
 
-module.exports.initUserProfile = initUserProfile;
-module.exports.addUserConnection = addUserConnection;
-module.exports.removeUserConnection = removeUserConnection;
-module.exports.updateUserRsvp = updateUserRsvp;
+module.exports.addUserConnectionM = addUserConnectionM;
+module.exports.removeUserConnectionM = removeUserConnectionM;
+module.exports.updateUserRsvpM = updateUserRsvpM;
+module.exports.getUserProfileM = getUserProfileM;

@@ -21,7 +21,7 @@
 
 		<% var topicCount = [ ]; %>
 		<% for (var i=0; i<obj.length; i++) { %>
-			<% topicCount.push(obj[i]._topic);%>
+			<% topicCount.push(obj[i].topic);%>
 		<% } %>
 		<% var uniqueTopics = Array.from(new Set(topicCount)) %>
 
@@ -30,8 +30,8 @@
 			<h3> <%= uniqueTopics[i] %> </h3>
 				<ul class = "catalog-links">
 					<% for (var j=0;j<obj.length; j++) { %>
-						<% if(obj[j]._topic === uniqueTopics[i]){ %>
-						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[j]._connectionID -%>"> <%= obj[j]._name %> </a> </li>
+						<% if(obj[j].topic === uniqueTopics[i]){ %>
+						<li> <a class = "catalog-link" href= "connection?connectionID=<%- obj[j]._id -%>"> <%= obj[j].name %> </a> </li>
 						<% } %>
 					<% } %>
 				</ul>

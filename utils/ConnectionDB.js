@@ -1,54 +1,62 @@
-const Connection = require('./../models/Connection.js')
+const Connection = require('./../models/Connection.js');
 const UserDB = require('./UserDB.js');
+const UserProfileDB = require('./UserProfileDB.js');
+const db = require('./../models/db.js');
+const Connection_Mongo = db.connectionModel;
+const UserProfile_Mongo = db.userprofileModel;
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/TechMasters');
+let conn = mongoose.connection;
 
-var users = UserDB.getUsers(); // gets all the users to be passed as an argument for the connection constructor.
-
-var con1 = new Connection('1111','Gestures',users[0],'Android','Test', '12-07-2019', '04:12');
-var con2 = new Connection('1112','New in Android 10!',users[0],'Android','Test', '12-07-2019', '05:12');
-var con3 = new Connection('1113','Collections',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
-var con4 = new Connection('1114','New in Java 12',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
-var con5 = new Connection('1115','Advanced',users[0],'Introduction to JAVA', 'Test', '12-07-2019', '06:12');
-var con6 = new Connection('1116','Resume Building',users[0],'Career', 'Test', '12-07-2019', '06:12');
-var con7 = new Connection('1117','How to tackle the Phone/Skype Interview!',users[0],'Career','Test', '12-07-2019', '06:12');
-var con8 = new Connection('1118','Importance of Grooming',users[0],'Career','Test', '12-07-2019', '06:12');
-
-var connections = [con1,con2,con3,con4,con5,con6,con7,con8];
-
-const getConnections = function(){
-  return connections;
-}
-const setConnections = function(newConnections){
-  connections = newConnections;
-}
-const addConnection = function(connection){
-  connections.push(connection);
+const getConnectionsM = function(callback){
+  Connection_Mongo.find({}, function(err, result){
+    connectionsList = result;
+    callback(result);
+  });
 }
 
-const getConnection = function (givenConnectionID){
-  for(var i=0;i<connections.length;i++){
-    if(connections[i]._connectionID == givenConnectionID){
-      return connections[i];
-      break;
+const addConnectionM = function(connection, callback){
+  var connectionObj = new Connection_Mongo(connection);
+  connectionObj.save(function(err){
+    if(err){
+      console.log("Error while creating new user: "+err);
+      return;
     }
-  }
-  return null;
+    callback();
+  });
 }
 
-function _arrayRemove(arr, value) {
-	return arr.filter(function(ele){
-    console.log(ele._connectionID);
-		return ele._connectionID != value;
-	});
+const getConnectionM = function(connectionID, callback){
+  Connection_Mongo.findOne({_id:connectionID}, function(err, result){
+    callback(result);
+  });
 }
 
-const deleteConnection = function(id) {
-  var connections = getConnections();
-  var newConnectionsList = _arrayRemove(connections, id);
-  setConnections(newConnectionsList);
+const deleteConnectionM = async function(connectionID, callback){
+  await UserProfile_Mongo.find({}, function(err, result){
+    // console.log("Searching for userProfile objects");
+    // console.log(result);
+    getConnectionM(connectionID, function(connection){
+      console.log("Connection ID "+connectionID);
+      console.log("The connection to be deleted: "+connection);
+      for(var i=0; i<result.length;i++){
+        UserProfileDB.removeUserConnectionM(result[i], connection, function(){
+          console.log("Connection has been processed");
+        });
+      }
+      Connection_Mongo.findOneAndRemove({_id:connectionID}, function(err){
+        if(err){
+          console.log("Error deleting the record: "+err);
+          return;
+        }
+        callback();
+      })
+    });
+  });
 }
 
 
-module.exports.addConnection = addConnection;
-module.exports.getConnection = getConnection;
-module.exports.getConnections = getConnections;
-module.exports.deleteConnection = deleteConnection;
+module.exports.getConnectionM = getConnectionM;
+module.exports.getConnectionsM = getConnectionsM;
+module.exports.deleteConnectionM = deleteConnectionM;
+module.exports.addConnectionM = addConnectionM;

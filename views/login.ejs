@@ -19,11 +19,18 @@
   	<h1>Enter your credentials</h1>
 
 		<form action = "/login" method="post">
+			<% if(errors){ %>
+				<ul>
+					<% if(errors.length > 0){ %>
+						<li> <%= errors[0].msg %> </li>
+					<% } %>
+				</ul>
+			<% } %>
 			<label for="user[email]"> User Name: </label><br>
-			<input type="text" name="user[email]" id = "user[email]"><br><br>
+			<input type="email" name="user[email]" id = "user[email]"><br><br>
 
 			<label for="user[password]"> Password: </label><br>
-			<input type="text" name="user[password]" id = "user[password]"><br><br>
+			<input type="password" name="user[password]" id = "user[password]"><br><br>
 
 			<button type="submit">Submit</button>
 		</form>

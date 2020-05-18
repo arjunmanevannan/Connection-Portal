@@ -15,26 +15,32 @@
 		<%- include('partials/site-navigation-logged-in'); -%>
 	</header>
 	<div class = "form">
-  	<h1>Host your talk with us! Sign up here!!</h1>
-
+  	<h2>Host your talk with us! Sign up here!!</h2>
+		<% if(errors){ %>
+			<ul>
+				<% if(errors.length > 0){ %>
+					<li> <%= errors[0].msg %> </li>
+				<% } %>
+			</ul>
+		<% } %>
 		<form action = "/newConnection" method="post">
-			<label for="connection[name]"> Talk Name: </label><br>
+			<label for="connection[name]"> Talk Name*: </label><br>
 			<input type="text" name="connection[name]" id = "connection[name]"><br><br>
 
 			<label for="connection[host]"> Hosted by: </label><br>
-			<input type="text" value = "<%=user._user._firstName%>" name="connection[host]" id = "connection[host]" readonly><br><br>
+			<input type="text" value = "<%=user.user.firstName%>" name="connection[host]" id = "connection[host]" readonly><br><br>
 
-			<label for="connection[topic]"> Topic:  </label><br>
+			<label for="connection[topic]"> Topic*:  </label><br>
 			<input type="text" name="connection[topic]" id = "connection[topic]"><br><br>
 
 			<label for="connection[details]"> Additional Details: </label><br>
 			<textarea name="connection[details]" rows="10" cols="50" id = "connection[details]">Please enter additional details here</textarea> <BR><BR>
 
-			<label for="connection[date]"> Date: </label><br>
-			<input type="text" name="connection[date]" id = "connection[date]"><br><br>
+			<label for="connection[date]"> Date*: </label><br>
+			<input type="date" name="connection[date]" id = "connection[date]"><br><br>
 
-			<label for="connection[time]"> Time: </label><br>
-			<input type="text" name="connection[time]" id = "connection[time]"><br><br>
+			<label for="connection[time]"> Time*: </label><br>
+			<input type="time" name="connection[time]" id = "connection[time]"><br><br>
 
 			<button type="submit">Submit</button>
 		</form>
